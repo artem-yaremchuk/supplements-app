@@ -8,7 +8,7 @@ type Props = {
 export default function SupplementCard({ item, onOpen }: Props) {
   return (
     <div
-      className="rounded-xl border p-4 shadow-sm transition hover:shadow-md"
+      className="cursor-pointer rounded-xl border p-4 shadow-sm transition hover:shadow-md"
       onClick={() => onOpen?.(item.id)}
     >
       <h3 className="text-lg font-semibold">{item.name}</h3>
@@ -23,7 +23,7 @@ export default function SupplementCard({ item, onOpen }: Props) {
       </ul>
 
       <div className="mt-3 text-xs font-bold">
-        Evidence: <span className="font-semibold">{item.evidence}</span>
+        Evidence: <span className="font-medium">{item.evidence}</span>
       </div>
     </div>
   );

@@ -1,1 +1,9 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+  --color-accent: oklch(50.8% 0.118 165.612);
+}
+
+button {
+  cursor: pointer;
+}
