@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-accent: oklch(50.8% 0.118 165.612);
@@ -6,4 +7,36 @@
 
 button {
   cursor: pointer;
+}
+
+.dark {
+  background-color: #0f172a; /* dark slate */
+  color: #f1f5f9; /* light text */
+}
+
+.dark input,
+.dark button {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border-color: #64748b;
+}
+
+.dark input::placeholder {
+  color: #cbd5e1;
+}
+
+.dark .bg-white {
+  background-color: #1e293b;
+}
+
+.dark .text-gray-700 {
+  color: #e2e8f0;
+}
+
+.dark .text-gray-600 {
+  color: #e2e8f0;
+}
+
+.dark .text-gray-500 {
+  color: #94a3b8;
 }

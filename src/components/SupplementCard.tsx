@@ -16,7 +16,10 @@ export default function SupplementCard({ item, onOpen }: Props) {
 
       <ul className="mt-3 flex flex-wrap gap-2">
         {item.mechanisms.map((m, index) => (
-          <li key={index} className="rounded bg-gray-100 px-2 py-0.5 text-xs">
+          <li
+            key={index}
+            className="rounded bg-gray-100 px-2 py-0.5 text-xs dark:bg-slate-700 dark:text-slate-50"
+          >
             {m}
           </li>
         ))}

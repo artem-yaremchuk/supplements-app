@@ -34,7 +34,10 @@ export default function SupplementDetails({ item, onClose }: Props) {
 
         <ul className="mt-4 flex flex-wrap gap-2">
           {item.mechanisms.map((m, index) => (
-            <li key={index} className="rounded bg-gray-100 px-2 py-1 text-xs">
+            <li
+              key={index}
+              className="rounded bg-gray-100 px-2 py-1 text-xs dark:bg-slate-700 dark:text-slate-50"
+            >
               {m}
             </li>
           ))}
