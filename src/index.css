@@ -2,7 +2,20 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-accent: oklch(50.8% 0.118 165.612);
+  /* Semantic system tokens */
+  --color-focus: oklch(50.8% 0.118 165.612); /* focus outline emerald-700 */
+  --color-hover: oklch(50.8% 0.118 165.612); /* hover state emerald-700 */
+  --color-accent: oklch(72% 0.1 165.612); /* logo accent ~emerald-400 */
+  --color-link-bg: oklch(50.8% 0.118 165.612); /* link bg emerald-700 */
+  --color-link-text-active: oklch(50.8% 0.118 165.612); /* active nav link emerald-700 */
+  --color-soft-bg: oklch(96.7% 0.003 264.542); /* light gray-100 */
+  --color-soft-text: oklch(27.8% 0.033 256.848); /* gray-800 */
+  --color-input-bg: #fff;
+  --color-input-text: oklch(21% 0.034 264.665); /* gray-900 */
+  --color-input-border: oklch(87.2% 0.01 258.338); /* gray-300 */
+  --color-btn-bg: #fff;
+  --color-btn-text: oklch(21% 0.034 264.665); /* gray-900 */
+  --color-btn-border: oklch(87.2% 0.01 258.338); /* gray-300 */
 }
 
 button {
@@ -10,33 +23,36 @@ button {
 }
 
 .dark {
-  background-color: #0f172a; /* dark slate */
-  color: #f1f5f9; /* light text */
-}
+  --color-link-text-active: oklch(65% 0.11 165); /* active nav link ~emerald-500 */
+  --color-soft-bg: oklch(32% 0.02 125); /* dark soft */
+  --color-soft-text: oklch(94% 0.02 125); /* soft light text */
+  --color-input-bg: #2b2b2b;
+  --color-input-text: #fff;
+  --color-input-border: #525252;
+  --color-btn-bg: #2b2b2b;
+  --color-btn-text: #fff;
+  --color-btn-border: #525252;
 
-.dark input,
-.dark button {
-  background-color: #1e293b;
-  color: #f8fafc;
-  border-color: #64748b;
+  background-color: #1a1a1a; /* deep warm black */
+  color: #f0ead6; /* light beige text */
 }
 
 .dark input::placeholder {
-  color: #cbd5e1;
+  color: #d4d4d4;
 }
 
 .dark .bg-white {
-  background-color: #1e293b;
+  background-color: #2b2b2b;
 }
 
 .dark .text-gray-700 {
-  color: #e2e8f0;
+  color: #f0ead6;
 }
 
 .dark .text-gray-600 {
-  color: #e2e8f0;
+  color: #e5decf;
 }
 
 .dark .text-gray-500 {
-  color: #94a3b8;
+  color: #bfae99;
 }

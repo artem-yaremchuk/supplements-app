@@ -28,4 +28,31 @@ export const supplements: Supplement[] = [
     mechanisms: ['Cortisol/testosterone modulation', 'Antioxidant activity'],
     evidence: 'Moderate',
   },
+  {
+    id: '4',
+    name: 'Magnesium',
+    shortDesc: 'Supports muscle & nerve function. Aids sleep.',
+    fullDesc:
+      'Magnesium is an essential mineral involved in over 300 enzymatic reactions. It helps regulate muscle and nerve function, blood sugar levels, and sleep. Deficiency is common, especially in people with stress or poor diet.',
+    mechanisms: ['NMDA receptor regulation', 'Enzymatic cofactor'],
+    evidence: 'High',
+  },
+  {
+    id: '5',
+    name: 'Omega-3 (Fish Oil)',
+    shortDesc: 'Supports heart & brain health. Anti-inflammatory.',
+    fullDesc:
+      'Fish oil is rich in omega-3 fatty acids EPA and DHA. These compounds have anti-inflammatory effects and support cardiovascular, cognitive, and joint health. Omega-3s are particularly beneficial when dietary intake is low.',
+    mechanisms: ['Eicosanoid modulation', 'Neuroprotection'],
+    evidence: 'High',
+  },
+  {
+    id: '6',
+    name: 'Collagen',
+    shortDesc: 'Supports skin, joint, and bone health.',
+    fullDesc:
+      'Collagen is the most abundant protein in the human body, forming the structural framework of skin, joints, and connective tissues. Supplementing with hydrolyzed collagen may improve skin elasticity, reduce wrinkles, and support joint and bone health, especially in aging populations.',
+    mechanisms: ['Collagen synthesis', 'Connective tissue remodeling'],
+    evidence: 'Moderate',
+  },
 ];

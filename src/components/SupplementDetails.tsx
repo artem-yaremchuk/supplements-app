@@ -1,12 +1,12 @@
 import type { Supplement } from '../types/supplements';
 import { motion } from 'framer-motion';
 
-type Props = {
+interface Props {
   item: Supplement;
   onClose: () => void;
-};
+}
 
-export default function SupplementDetails({ item, onClose }: Props) {
+const SupplementDetails = ({ item, onClose }: Props) => {
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
@@ -22,7 +22,7 @@ export default function SupplementDetails({ item, onClose }: Props) {
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
         <button
-          className="hover:text-accent mb-4 ml-auto block text-gray-500 transition-colors"
+          className="hover:!text-hover dark:hover:!text-text-link-active mb-4 ml-auto block text-gray-500 transition-colors"
           onClick={onClose}
           type="button"
         >
@@ -34,10 +34,7 @@ export default function SupplementDetails({ item, onClose }: Props) {
 
         <ul className="mt-4 flex flex-wrap gap-2">
           {item.mechanisms.map((m, index) => (
-            <li
-              key={index}
-              className="rounded bg-gray-100 px-2 py-1 text-xs dark:bg-slate-700 dark:text-slate-50"
-            >
+            <li key={index} className="bg-soft-bg text-soft-text rounded px-2 py-1 text-xs">
               {m}
             </li>
           ))}
@@ -49,4 +46,6 @@ export default function SupplementDetails({ item, onClose }: Props) {
       </motion.div>
     </motion.div>
   );
-}
+};
+
+export default SupplementDetails;
