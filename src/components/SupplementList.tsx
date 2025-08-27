@@ -1,12 +1,12 @@
 import SupplementCard from './SupplementCard';
 import type { Supplement } from '../types/supplements';
 
-type Props = {
+interface Props {
   items: Supplement[];
   onOpen: (id: string) => void;
-};
+}
 
-export default function SupplementList({ items, onOpen }: Props) {
+const SupplementList = ({ items, onOpen }: Props) => {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((s) => (
@@ -14,4 +14,6 @@ export default function SupplementList({ items, onOpen }: Props) {
       ))}
     </div>
   );
-}
+};
+
+export default SupplementList;

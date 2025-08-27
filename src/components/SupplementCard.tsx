@@ -1,11 +1,11 @@
 import type { Supplement } from '../types/supplements';
 
-type Props = {
+interface Props {
   item: Supplement;
   onOpen?: (id: string) => void;
-};
+}
 
-export default function SupplementCard({ item, onOpen }: Props) {
+const SupplementCard = ({ item, onOpen }: Props) => {
   return (
     <div
       className="cursor-pointer rounded-xl border p-4 shadow-sm transition hover:shadow-md"
@@ -16,10 +16,7 @@ export default function SupplementCard({ item, onOpen }: Props) {
 
       <ul className="mt-3 flex flex-wrap gap-2">
         {item.mechanisms.map((m, index) => (
-          <li
-            key={index}
-            className="rounded bg-gray-100 px-2 py-0.5 text-xs dark:bg-slate-700 dark:text-slate-50"
-          >
+          <li key={index} className="bg-soft-bg text-soft-text rounded px-2 py-0.5 text-xs">
             {m}
           </li>
         ))}
@@ -30,4 +27,6 @@ export default function SupplementCard({ item, onOpen }: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default SupplementCard;
