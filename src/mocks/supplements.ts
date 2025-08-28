@@ -55,4 +55,31 @@ export const supplements: Supplement[] = [
     mechanisms: ['Collagen synthesis', 'Connective tissue remodeling'],
     evidence: 'Moderate',
   },
+  {
+    id: '7',
+    name: 'Zinc',
+    shortDesc: 'Supports immunity and hormone function.',
+    fullDesc:
+      'Zinc is an essential mineral that is critical for the function of hundreds of enzymes. Consequently, it plays many roles, including in antioxidant enzymes, brain function, and the immune system. Zinc is most commonly taken to reduce the duration of respiratory infections and the common cold.',
+    mechanisms: ['Enzymatic cofactor', 'Immune modulation'],
+    evidence: 'Moderate',
+  },
+  {
+    id: '8',
+    name: 'Melatonin',
+    shortDesc: 'Regulates sleep-wake cycle. Helpful for jet lag & insomnia.',
+    fullDesc:
+      'Melatonin is a hormone that helps regulate circadian rhythms. Supplementation is effective for improving sleep onset, especially in people with disrupted sleep schedules or jet lag.',
+    mechanisms: ['Circadian rhythm regulation', 'Sleep signaling receptors'],
+    evidence: 'High',
+  },
+  {
+    id: '9',
+    name: 'Probiotics',
+    shortDesc: 'Supports gut health and digestion.',
+    fullDesc:
+      'Probiotics are live microorganisms that support gut microbiota. They may improve digestive health, reduce symptoms of IBS, and support immune function. Effects depend on the strain and dose used.',
+    mechanisms: ['Microbiome modulation', 'Gut barrier integrity'],
+    evidence: 'Moderate',
+  },
 ];
