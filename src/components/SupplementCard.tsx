@@ -2,14 +2,14 @@ import type { Supplement } from '../types/supplements';
 
 interface Props {
   item: Supplement;
-  onOpen?: (id: string) => void;
+  onOpen: (id: string) => void;
 }
 
 const SupplementCard = ({ item, onOpen }: Props) => {
   return (
     <div
       className="cursor-pointer rounded-xl border p-4 shadow-sm transition hover:shadow-md"
-      onClick={() => onOpen?.(item.id)}
+      onClick={() => onOpen(item.id)}
     >
       <h3 className="text-lg font-semibold">{item.name}</h3>
       <p className="mt-1 text-sm text-gray-600">{item.shortDesc}</p>

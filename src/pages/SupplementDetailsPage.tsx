@@ -1,0 +1,28 @@
+import { useParams, useNavigate } from 'react-router-dom';
+import { supplements } from '../mocks/supplements';
+import SupplementDetails from '../components/SupplementDetails';
+
+const SupplementDetailsPage = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  const item = supplements.find((s) => s.id === id);
+
+  return item ? (
+    <main className="mx-auto max-w-full p-6">
+      <SupplementDetails item={item} onClose={() => navigate('/supplements')} />
+    </main>
+  ) : (
+    <div className="flex flex-col items-center justify-center gap-2 p-6">
+      <p className="mb-2">Supplement not found.</p>
+      <button
+        onClick={() => navigate('/supplements')}
+        className="border-btn-border text-btn-text bg-btn-bg dark:hover:bg-hover dark:hover:border-hover rounded border px-3 py-2 text-sm whitespace-nowrap transition-colors hover:bg-gray-100"
+      >
+        Back to list
+      </button>
+    </div>
+  );
+};
+
+export default SupplementDetailsPage;
