@@ -1,0 +1,199 @@
+import { r as t, j as C, d as D, a as T } from './index-D77W8Gnh.js';
+import { s as W } from './supplements-BLsW9kRw.js';
+import {
+  M as b,
+  i as H,
+  u as L,
+  P as K,
+  a as U,
+  b as A,
+  L as B,
+  S as F,
+} from './SupplementDetails-w-1958Ix.js';
+class G extends t.Component {
+  getSnapshotBeforeUpdate(o) {
+    const e = this.props.childRef.current;
+    if (e && o.isPresent && !this.props.isPresent) {
+      const r = e.offsetParent,
+        a = (H(r) && r.offsetWidth) || 0,
+        n = this.props.sizeRef.current;
+      ((n.height = e.offsetHeight || 0),
+        (n.width = e.offsetWidth || 0),
+        (n.top = e.offsetTop),
+        (n.left = e.offsetLeft),
+        (n.right = a - n.width - n.left));
+    }
+    return null;
+  }
+  componentDidUpdate() {}
+  render() {
+    return this.props.children;
+  }
+}
+function N({ children: s, isPresent: o, anchorX: e, root: r }) {
+  const a = t.useId(),
+    n = t.useRef(null),
+    m = t.useRef({ width: 0, height: 0, top: 0, left: 0, right: 0 }),
+    { nonce: g } = t.useContext(b);
+  return (
+    t.useInsertionEffect(() => {
+      const { width: R, height: i, top: E, left: l, right: u } = m.current;
+      if (o || !n.current || !R || !i) return;
+      const d = e === 'left' ? `left: ${l}` : `right: ${u}`;
+      n.current.dataset.motionPopId = a;
+      const f = document.createElement('style');
+      g && (f.nonce = g);
+      const h = r ?? document.head;
+      return (
+        h.appendChild(f),
+        f.sheet &&
+          f.sheet.insertRule(`
+          [data-motion-pop-id="${a}"] {
+            position: absolute !important;
+            width: ${R}px !important;
+            height: ${i}px !important;
+            ${d}px !important;
+            top: ${E}px !important;
+          }
+        `),
+        () => {
+          h.contains(f) && h.removeChild(f);
+        }
+      );
+    }, [o]),
+    C.jsx(G, { isPresent: o, childRef: n, sizeRef: m, children: t.cloneElement(s, { ref: n }) })
+  );
+}
+const V = ({
+  children: s,
+  initial: o,
+  isPresent: e,
+  onExitComplete: r,
+  custom: a,
+  presenceAffectsLayout: n,
+  mode: m,
+  anchorX: g,
+  root: R,
+}) => {
+  const i = L(X),
+    E = t.useId();
+  let l = !0,
+    u = t.useMemo(
+      () => (
+        (l = !1),
+        {
+          id: E,
+          initial: o,
+          isPresent: e,
+          custom: a,
+          onExitComplete: (d) => {
+            i.set(d, !0);
+            for (const f of i.values()) if (!f) return;
+            r && r();
+          },
+          register: (d) => (i.set(d, !1), () => i.delete(d)),
+        }
+      ),
+      [e, i, r],
+    );
+  return (
+    n && l && (u = { ...u }),
+    t.useMemo(() => {
+      i.forEach((d, f) => i.set(f, !1));
+    }, [e]),
+    t.useEffect(() => {
+      !e && !i.size && r && r();
+    }, [e]),
+    m === 'popLayout' && (s = C.jsx(N, { isPresent: e, anchorX: g, root: R, children: s })),
+    C.jsx(K.Provider, { value: u, children: s })
+  );
+};
+function X() {
+  return new Map();
+}
+const P = (s) => s.key || '';
+function $(s) {
+  const o = [];
+  return (
+    t.Children.forEach(s, (e) => {
+      t.isValidElement(e) && o.push(e);
+    }),
+    o
+  );
+}
+const _ = ({
+    children: s,
+    custom: o,
+    initial: e = !0,
+    onExitComplete: r,
+    presenceAffectsLayout: a = !0,
+    mode: n = 'sync',
+    propagate: m = !1,
+    anchorX: g = 'left',
+    root: R,
+  }) => {
+    const [i, E] = U(m),
+      l = t.useMemo(() => $(s), [s]),
+      u = m && !i ? [] : l.map(P),
+      d = t.useRef(!0),
+      f = t.useRef(l),
+      h = L(() => new Map()),
+      [S, z] = t.useState(l),
+      [x, v] = t.useState(l);
+    A(() => {
+      ((d.current = !1), (f.current = l));
+      for (let p = 0; p < x.length; p++) {
+        const c = P(x[p]);
+        u.includes(c) ? h.delete(c) : h.get(c) !== !0 && h.set(c, !1);
+      }
+    }, [x, u.length, u.join('-')]);
+    const M = [];
+    if (l !== S) {
+      let p = [...l];
+      for (let c = 0; c < x.length; c++) {
+        const y = x[c],
+          j = P(y);
+        u.includes(j) || (p.splice(c, 0, y), M.push(y));
+      }
+      return (n === 'wait' && M.length && (p = M), v($(p)), z(l), null);
+    }
+    const { forceRender: I } = t.useContext(B);
+    return C.jsx(C.Fragment, {
+      children: x.map((p) => {
+        const c = P(p),
+          y = m && !i ? !1 : l === x || u.includes(c),
+          j = () => {
+            if (h.has(c)) h.set(c, !0);
+            else return;
+            let w = !0;
+            (h.forEach((k) => {
+              k || (w = !1);
+            }),
+              w && (I?.(), v(f.current), m && E?.(), r && r()));
+          };
+        return C.jsx(
+          V,
+          {
+            isPresent: y,
+            initial: !d.current || e ? void 0 : !1,
+            custom: o,
+            presenceAffectsLayout: a,
+            mode: n,
+            root: R,
+            onExitComplete: y ? void 0 : j,
+            anchorX: g,
+            children: p,
+          },
+          c,
+        );
+      }),
+    });
+  },
+  Q = () => {
+    const { id: s } = D(),
+      o = T(),
+      e = W.find((a) => a.id === s),
+      r = () => o(-1);
+    return C.jsx(_, { children: e && C.jsx(F, { item: e, onClose: r }) });
+  };
+export { Q as default };

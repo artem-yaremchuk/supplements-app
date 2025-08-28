@@ -1,0 +1,101 @@
+import { j as e, u as f, r as o, a as g, b, c as j } from './index-D77W8Gnh.js';
+import { s as v } from './supplements-BLsW9kRw.js';
+const N = ({ item: s, onOpen: n }) =>
+    e.jsxs('div', {
+      className: 'cursor-pointer rounded-xl border p-4 shadow-sm transition hover:shadow-md',
+      onClick: () => n(s.id),
+      children: [
+        e.jsx('h3', { className: 'text-lg font-semibold', children: s.name }),
+        e.jsx('p', { className: 'mt-1 text-sm text-gray-600', children: s.shortDesc }),
+        e.jsx('ul', {
+          className: 'mt-3 flex flex-wrap gap-2',
+          children: s.mechanisms.map((t, a) =>
+            e.jsx(
+              'li',
+              { className: 'bg-soft-bg text-soft-text rounded px-2 py-0.5 text-xs', children: t },
+              a,
+            ),
+          ),
+        }),
+        e.jsxs('div', {
+          className: 'mt-3 text-xs font-bold',
+          children: [
+            'Evidence: ',
+            e.jsx('span', { className: 'font-medium', children: s.evidence }),
+          ],
+        }),
+      ],
+    }),
+  w = ({ items: s, onOpen: n }) =>
+    e.jsx('div', {
+      className: 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3',
+      children: s.map((t) => e.jsx(N, { item: t, onOpen: n }, t.id)),
+    }),
+  y = () => {
+    const { toogleTheme: s } = f();
+    return e.jsx('button', {
+      type: 'button',
+      onClick: s,
+      className:
+        'border-btn-border text-btn-text bg-btn-bg dark:hover:bg-hover dark:hover:border-hover rounded border px-3 py-2 text-sm whitespace-nowrap transition-colors hover:bg-gray-100',
+      children: 'Toogle theme',
+    });
+  },
+  T = () => {
+    const [s, n] = o.useState(''),
+      [t, a] = o.useState([]),
+      [i, d] = o.useState(!0),
+      c = o.useRef(null),
+      m = g(),
+      u = b();
+    (o.useEffect(() => {
+      c.current?.focus();
+    }, []),
+      o.useEffect(() => {
+        const r = setTimeout(() => (a(v), d(!1), () => clearTimeout(r)), 500);
+      }, [s, t]));
+    const x = o.useMemo(() => {
+        const r = s.trim().toLowerCase();
+        return r
+          ? t.filter((l) =>
+              [l.name, l.shortDesc, ...l.mechanisms].some((h) => h.toLowerCase().includes(r)),
+            )
+          : t;
+      }, [s, t]),
+      p = (r) => {
+        m(`/supplements/${r}`, { state: { background: u } });
+      };
+    return e.jsx('main', {
+      children: e.jsxs('section', {
+        className: 'py mx-auto max-w-full space-y-6 p-6',
+        children: [
+          e.jsxs('div', {
+            className:
+              'flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center',
+            children: [
+              e.jsx('h1', {
+                className: 'text-2xl font-bold',
+                children: 'Supplements encyclopedia',
+              }),
+              e.jsxs('div', {
+                className: 'flex gap-2',
+                children: [
+                  e.jsx('input', {
+                    ref: c,
+                    value: s,
+                    onChange: (r) => n(r.target.value),
+                    placeholder: 'Search',
+                    className:
+                      'focus:border-focus text-input-text border-input-border bg-input-bg w-full rounded border px-3 py-2 transition-colors outline-none sm:w-80',
+                  }),
+                  e.jsx(y, {}),
+                ],
+              }),
+            ],
+          }),
+          i ? e.jsx(j, {}) : e.jsx(w, { items: x, onOpen: p }),
+        ],
+      }),
+    });
+  };
+export { T as default };
