@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://artem-yaremchuk.github.io/supplements-app/",
   "scripts": {
     "test": "echo \"No tests yet\" && exit 0",
     "dev": "vite",
