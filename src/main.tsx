@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/supplements-app">
         <App />
       </BrowserRouter>
     </ThemeProvider>
