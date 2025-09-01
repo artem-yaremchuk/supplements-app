@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <main>
       <section
-        className="relative flex items-center justify-center bg-cover bg-center px-6 py-65 text-center text-white"
+        className="relative flex items-center justify-center bg-cover bg-center px-6 py-56 text-center text-white sm:py-66"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-black/50" /> {/* overlay */}

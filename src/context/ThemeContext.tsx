@@ -4,20 +4,20 @@ type Theme = 'light' | 'dark';
 
 const ThemeContext = createContext<{
   theme: Theme;
-  toogleTheme: () => void;
+  toggleTheme: () => void;
 }>({
   theme: 'light',
-  toogleTheme: () => {},
+  toggleTheme: () => {},
 });
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<Theme>('light');
 
-  const toogleTheme = () => {
+  const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  return <ThemeContext.Provider value={{ theme, toogleTheme }}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
