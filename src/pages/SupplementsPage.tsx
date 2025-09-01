@@ -1,41 +1,42 @@
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch } from '../redux/store.ts';
+import { selectItems, selectIsLoading, selectError } from '../redux/supplements/selectors';
+import { fetchSupplements } from '../redux/supplements/operations.ts';
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { supplements } from '../mocks/supplements';
-import SupplementList from '../components/SupplementList';
-import ThemeToogle from '../components/ui/ThemeToggle';
-import type { Supplement } from '../types/supplements';
+import ThemeToggle from '../components/ui/ThemeToggle';
 import Loader from '../components/ui/Loader';
+import SupplementList from '../components/SupplementList';
 
 const SupplementsPage = () => {
-  const [query, setQuery] = useState('');
-  const [data, setData] = useState<Supplement[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
+  const items = useSelector(selectItems);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
+  useEffect(() => {
+    dispatch(fetchSupplements());
+  }, [dispatch]);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setData(supplements);
-      setIsLoading(false);
-
-      return () => clearTimeout(timer);
-    }, 500);
-  }, [query, data]);
+  const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return data;
+    if (!q) return items;
 
-    return data.filter((s) =>
+    return items.filter((s) =>
       [s.name, s.shortDesc, ...s.mechanisms].some((v) => v.toLowerCase().includes(q)),
     );
-  }, [query, data]);
+  }, [query, items]);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOpen = (id: string) => {
     navigate(`/supplements/${id}`, {
@@ -58,11 +59,17 @@ const SupplementsPage = () => {
               className="focus:border-focus text-input-text border-input-border bg-input-bg w-full rounded border px-3 py-2 transition-colors outline-none sm:w-80"
             />
 
-            <ThemeToogle />
+            <ThemeToggle />
           </div>
         </div>
 
-        {isLoading ? <Loader /> : <SupplementList items={filtered} onOpen={handleOpen} />}
+        {isLoading && !error && <Loader />}
+
+        {error && (
+          <p className="flex flex-col items-center justify-center gap-2 p-6 text-[18px]">{error}</p>
+        )}
+
+        <SupplementList items={filtered} onOpen={handleOpen} />
       </section>
     </main>
   );

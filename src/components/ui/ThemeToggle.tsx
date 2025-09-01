@@ -1,12 +1,12 @@
 import { useTheme } from '../../context/ThemeContext';
 
-const ThemeToogle = () => {
-  const { toogleTheme } = useTheme();
+const ThemeToggle = () => {
+  const { toggleTheme } = useTheme();
 
   return (
     <button
       type="button"
-      onClick={toogleTheme}
+      onClick={toggleTheme}
       className="border-btn-border text-btn-text bg-btn-bg dark:hover:bg-hover dark:hover:border-hover rounded border px-3 py-2 text-sm whitespace-nowrap transition-colors hover:bg-gray-100"
     >
       Toogle theme
@@ -14,4 +14,4 @@ const ThemeToogle = () => {
   );
 };
 
-export default ThemeToogle;
+export default ThemeToggle;
