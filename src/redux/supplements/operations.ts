@@ -1,23 +1,20 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { Supplement } from '../../types/supplements';
-import toast from 'react-hot-toast';
-
-axios.defaults.baseURL = 'https://f6084644-e458-4a55-9311-3f2f03bb63f6.mock.pstmn.io';
+import api from '../../services/api';
+import axios from 'axios';
+import { COMMON_ERROR_MESSAGES } from '../../constants/errors';
 
 export const fetchSupplements = createAsyncThunk<Supplement[], void, { rejectValue: string }>(
   'supplements/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('/supplements');
+      const response = await api.get('/supplements');
       return response.data;
     } catch (e) {
       const errorMessage =
         axios.isAxiosError(e) && e.response?.data?.message
           ? e.response.data.message
-          : 'Unknown server error';
-
-      toast.error(errorMessage);
+          : COMMON_ERROR_MESSAGES.UNKNOWN;
 
       return thunkAPI.rejectWithValue(errorMessage);
     }
