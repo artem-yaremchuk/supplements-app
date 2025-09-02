@@ -2,6 +2,7 @@ import type { Supplement } from '../../types/supplements';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { fetchSupplements } from './operations';
+import { COMMON_ERROR_MESSAGES } from '../../constants/errors';
 
 interface SupplementsState {
   items: Supplement[];
@@ -23,7 +24,7 @@ const handlePending = (state: SupplementsState) => {
 
 const handleRejected = (state: SupplementsState, action: PayloadAction<string | undefined>) => {
   state.isLoading = false;
-  state.error = action.payload || 'Unknown server error';
+  state.error = action.payload || COMMON_ERROR_MESSAGES.UNKNOWN;
 };
 
 const supplementsSlice = createSlice({
