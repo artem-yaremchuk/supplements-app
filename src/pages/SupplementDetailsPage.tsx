@@ -17,7 +17,7 @@ const SupplementDetailsPage = () => {
       <p className="mb-2">Supplement not found.</p>
       <button
         onClick={() => navigate('/supplements')}
-        className="border-btn-border text-btn-text bg-btn-bg dark:hover:bg-hover dark:hover:border-hover rounded border px-3 py-2 text-sm whitespace-nowrap transition-colors hover:bg-gray-100"
+        className="border-ui-border text-btn-text bg-ui-bg dark:hover:bg-hover dark:hover:border-hover hover:bg-soft-bg rounded border px-3 py-2 text-sm whitespace-nowrap transition-colors"
       >
         Back to list
       </button>

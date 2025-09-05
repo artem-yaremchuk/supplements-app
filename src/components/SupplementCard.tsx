@@ -12,11 +12,11 @@ const SupplementCard = ({ item, onOpen }: Props) => {
       onClick={() => onOpen(item.id)}
     >
       <h3 className="text-lg font-semibold">{item.name}</h3>
-      <p className="mt-1 text-sm text-gray-600">{item.shortDesc}</p>
+      <p className="text-secondary-text mt-1 text-sm">{item.shortDesc}</p>
 
       <ul className="mt-3 flex flex-wrap gap-2">
         {item.mechanisms.map((m, index) => (
-          <li key={index} className="bg-soft-bg text-soft-text rounded px-2 py-0.5 text-xs">
+          <li key={index} className="bg-soft-bg rounded px-2 py-0.5 text-xs">
             {m}
           </li>
         ))}

@@ -17,9 +17,9 @@ const UserMenu = () => {
       <button
         onClick={handleOpen}
         type="button"
-        className="text-btn-text flex items-center gap-2 rounded-full px-3 py-2"
+        className="flex items-center gap-2 rounded-full px-3 py-2"
       >
-        <svg className="text-btn-text h-8 w-8 fill-current">
+        <svg className="h-8 w-8 fill-current">
           <use href={`${sprite}#icon-profile`}></use>
         </svg>
 
@@ -29,20 +29,20 @@ const UserMenu = () => {
       {isOpen && (
         <div className="bg-soft-bg absolute right-0 z-15 mt-2 w-56 rounded-md p-4 shadow-lg">
           <p className="mb-1 text-sm font-semibold">{user?.name} Artem Yaremchuk</p>
-          <p className="text-sm text-gray-500">Free Account</p>
-          <hr className="mt-2 border-gray-400" />
+          <p className="text-secondary-text text-sm">Free Account</p>
+          <hr className="border-ui-border mt-2" />
 
           <div className="mt-7 flex flex-col gap-1">
             <h6 className="text-sm font-semibold">My Content</h6>
-            <Link to="/saved" className="text-sm text-gray-700 hover:underline">
+            <Link to="/saved" className="text-sm hover:underline">
               Saved Pages
             </Link>
-            <hr className="mt-2 border-gray-400" />
+            <hr className="border-ui-border mt-2" />
           </div>
 
           <div className="mt-7 flex flex-col items-start gap-1">
             <h6 className="text-sm font-semibold">My Profile</h6>
-            <button type="button" className="text-sm text-gray-700 hover:underline">
+            <button type="button" className="text-sm hover:underline">
               Logout
             </button>
           </div>

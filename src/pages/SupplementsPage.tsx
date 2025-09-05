@@ -56,7 +56,7 @@ const SupplementsPage = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search"
-              className="focus:border-focus text-input-text border-input-border bg-input-bg w-full rounded border px-3 py-2 transition-colors outline-none sm:w-80"
+              className="focus:border-focus bg-ui-bg text-input-text border-ui-border w-full rounded border px-3 py-2 transition-colors outline-none sm:w-80"
             />
 
             <ThemeToggle />

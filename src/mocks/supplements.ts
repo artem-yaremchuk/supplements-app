@@ -82,4 +82,31 @@ export const supplements: Supplement[] = [
     mechanisms: ['Microbiome modulation', 'Gut barrier integrity'],
     evidence: 'Moderate',
   },
+  {
+    id: '10',
+    name: 'Curcumin',
+    shortDesc: 'Anti-inflammatory. May relieve joint pain.',
+    fullDesc:
+      'Curcumin is the active compound in turmeric, known for its anti-inflammatory and antioxidant properties. It’s commonly used for joint pain, arthritis, and general inflammation. Bioavailability is low unless combined with piperine.',
+    mechanisms: ['NF-κB inhibition', 'Antioxidant activity'],
+    evidence: 'Moderate',
+  },
+  {
+    id: '11',
+    name: 'Glucosamine',
+    shortDesc: 'Joint support. May reduce osteoarthritis symptoms.',
+    fullDesc:
+      'Glucosamine is a natural compound found in cartilage. Supplementation is popular for managing joint pain and improving mobility, especially in osteoarthritis. Often combined with chondroitin and MSM.',
+    mechanisms: ['Cartilage regeneration', 'Inflammation reduction'],
+    evidence: 'Moderate',
+  },
+  {
+    id: '12',
+    name: 'Beta-Alanine',
+    shortDesc: 'Delays muscle fatigue. Boosts performance in short bursts.',
+    fullDesc:
+      'Beta-alanine is a non-essential amino acid that increases muscle carnosine levels. Elevated carnosine helps buffer acid in muscles, which may delay fatigue during high-intensity efforts like sprints or heavy lifts. It’s especially useful for activities lasting 1–4 minutes.',
+    mechanisms: ['Carnosine synthesis', 'pH buffering in muscle tissue'],
+    evidence: 'High',
+  },
 ];

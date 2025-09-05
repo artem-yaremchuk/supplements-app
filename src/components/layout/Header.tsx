@@ -7,7 +7,7 @@ const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <header className="border-b bg-white px-6 py-4 shadow-sm dark:bg-slate-800">
+    <header className="bg-ui-bg border-b px-6 py-4 shadow-sm">
       <nav className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
         <NavLink to="/" className="text-accent text-xl font-bold">
           SupplementsApp
@@ -17,9 +17,7 @@ const Header = () => {
           <li>
             <NavLink
               to="/"
-              className={({ isActive }) =>
-                isActive ? 'text-link-text-active' : 'text-gray-600 dark:text-slate-200'
-              }
+              className={({ isActive }) => (isActive ? 'text-link-text-active' : 'text-main-text')}
             >
               Home
             </NavLink>
@@ -27,9 +25,7 @@ const Header = () => {
           <li>
             <NavLink
               to="/supplements"
-              className={({ isActive }) =>
-                isActive ? 'text-link-text-active' : 'text-gray-600 dark:text-slate-200'
-              }
+              className={({ isActive }) => (isActive ? 'text-link-text-active' : 'text-main-text')}
             >
               Supplements
             </NavLink>
