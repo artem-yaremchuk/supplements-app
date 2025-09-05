@@ -5,18 +5,16 @@ const HomePage = () => {
   return (
     <main>
       <section
-        className="relative flex items-center justify-center bg-cover bg-center px-6 py-56 text-center text-white sm:py-66"
+        className="relative flex items-center justify-center bg-cover bg-center px-6 py-52 text-center text-white sm:py-66"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
-        <div className="absolute inset-0 bg-black/50" /> {/* overlay */}
+        <div className="bg-overlay-bg absolute inset-0" /> {/* overlay */}
         <div className="relative z-10 max-w-2xl space-y-6">
           <h1 className="text-4xl font-bold sm:text-5xl">Discover evidence-based supplements</h1>
-          <p className="text-lg text-slate-200">
-            Search, compare and explore science-backed ingredients
-          </p>
+          <p className="text-lg">Search, compare and explore science-backed ingredients</p>
           <Link
             to="/supplements"
-            className="bg-link-bg inline-block rounded-md px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-600"
+            className="bg-link-bg hover:bg-link-bg-hover inline-block rounded-md px-6 py-3 text-sm font-semibold transition-colors"
           >
             Browse Supplements
           </Link>

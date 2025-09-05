@@ -2,20 +2,47 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Semantic system tokens */
+  /* Text roles */
+  --color-main-text: oklch(21% 0.034 264.665); /* primary text gray-900 */
+  --color-secondary-text: oklch(55% 0.02 264); /* for subtitles, helper text gray-600 */
+
+  /* Accent and states */
   --color-focus: oklch(50.8% 0.118 165.612); /* focus outline emerald-700 */
-  --color-hover: oklch(50.8% 0.118 165.612); /* hover state emerald-700 */
+  --color-hover: oklch(50.8% 0.118 165.612); /* base hover color emerald-700 */
   --color-accent: oklch(72% 0.1 165.612); /* logo accent ~emerald-400 */
+
+  /* UI elements */
   --color-link-bg: oklch(50.8% 0.118 165.612); /* link bg emerald-700 */
+  --color-link-bg-hover: oklch(59.6% 0.145 163.225); /* hover for Browse button emerald-600 */
   --color-link-text-active: oklch(50.8% 0.118 165.612); /* active nav link emerald-700 */
-  --color-soft-bg: oklch(96.7% 0.003 264.542); /* light gray-100 */
-  --color-soft-text: oklch(27.8% 0.033 256.848); /* gray-800 */
-  --color-input-bg: #fff;
-  --color-input-text: oklch(21% 0.034 264.665); /* gray-900 */
-  --color-input-border: oklch(87.2% 0.01 258.338); /* gray-300 */
-  --color-btn-bg: #fff;
-  --color-btn-text: oklch(21% 0.034 264.665); /* gray-900 */
-  --color-btn-border: oklch(87.2% 0.01 258.338); /* gray-300 */
+  --color-overlay-bg: rgba(0, 0, 0, 0.5); /* dark overlay for hero section */
+  --color-modal-bg: #fff;
+  --color-soft-bg: oklch(96.7% 0.003 264.542); /* gray-100 */
+  --color-ui-bg: #fff; /* inputs, buttons, header */
+  --color-ui-border: oklch(87.2% 0.01 258.338); /* gray-300 */
+  --color-input-text: var(--color-main-text);
+  --color-btn-text: var(--color-main-text);
+}
+
+body {
+  background-color: #fff;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji';
+  font-size: 16px;
+  color: var(--color-main-text);
 }
 
 button {
@@ -23,36 +50,19 @@ button {
 }
 
 .dark {
+  /* Text roles */
+  --color-main-text: #f0ead6; /* light beige text */
+  --color-secondary-text: oklch(80% 0.015 85); /* warm muted beige-gray */
+
+  /* UI elements */
   --color-link-text-active: oklch(65% 0.11 165); /* active nav link ~emerald-500 */
+  --color-modal-bg: #1a1a1a; /* deep warm black */
   --color-soft-bg: oklch(32% 0.02 125); /* dark soft */
-  --color-soft-text: oklch(94% 0.02 125); /* soft light text */
-  --color-input-bg: #2b2b2b;
+  --color-ui-bg: #2b2b2b;
+  --color-ui-border: #525252;
   --color-input-text: #fff;
-  --color-input-border: #525252;
-  --color-btn-bg: #2b2b2b;
   --color-btn-text: #fff;
-  --color-btn-border: #525252;
 
   background-color: #1a1a1a; /* deep warm black */
-  color: #f0ead6; /* light beige text */
-}
-
-.dark input::placeholder {
-  color: #d4d4d4;
-}
-
-.dark .bg-white {
-  background-color: #2b2b2b;
-}
-
-.dark .text-gray-700 {
-  color: #f0ead6;
-}
-
-.dark .text-gray-600 {
-  color: #e5decf;
-}
-
-.dark .text-gray-500 {
-  color: #bfae99;
+  color: var(--color-main-text);
 }
