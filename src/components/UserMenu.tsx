@@ -1,53 +1,84 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../redux/auth/selectors';
-import sprite from '../assets/images/icons.svg';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { CircleUserRound, ChevronDown, ChevronUp } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../redux/auth/operations';
+import type { AppDispatch } from '../redux/store';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const user = useSelector(selectUser);
 
-  const handleOpen = () => setIsOpen(!isOpen);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+
+  useEffect(() => {
+    const closeMenu = () => setIsOpen(false);
+
+    if (isOpen) window.addEventListener('click', closeMenu);
+    return () => window.removeEventListener('click', closeMenu);
+  }, [isOpen]);
+
+  const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/');
+    setIsOpen(false);
+  };
+
+  const handleSaved = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <div className="relative">
+    <div className="relative" onClick={stopPropagation}>
       <button
-        onClick={handleOpen}
+        onClick={toggleMenu}
         type="button"
         className="flex items-center gap-2 rounded-full px-3 py-2"
       >
-        <svg className="h-8 w-8 fill-current">
-          <use href={`${sprite}#icon-profile`}></use>
-        </svg>
+        <CircleUserRound size={30} strokeWidth={1} />
 
         {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
       </button>
 
-      {isOpen && (
-        <div className="bg-soft-bg absolute right-0 z-15 mt-2 w-56 rounded-md p-4 shadow-lg">
-          <p className="mb-1 text-sm font-semibold">{user?.name} Artem Yaremchuk</p>
-          <p className="text-secondary-text text-sm">Free Account</p>
-          <hr className="border-ui-border mt-2" />
-
-          <div className="mt-7 flex flex-col gap-1">
-            <h6 className="text-sm font-semibold">My Content</h6>
-            <Link to="/saved" className="text-sm hover:underline">
-              Saved Pages
-            </Link>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="bg-soft-bg absolute right-0 z-15 mt-2 w-56 rounded-md p-4 shadow-lg"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+          >
+            <p className="mb-1 text-sm font-semibold">{user?.name}</p>
+            <p className="text-secondary-text text-sm">Free Account</p>
             <hr className="border-ui-border mt-2" />
-          </div>
 
-          <div className="mt-7 flex flex-col items-start gap-1">
-            <h6 className="text-sm font-semibold">My Profile</h6>
-            <button type="button" className="text-sm hover:underline">
-              Logout
-            </button>
-          </div>
-        </div>
-      )}
+            <div className="mt-7 flex flex-col gap-1">
+              <h6 className="text-sm font-semibold">My Content</h6>
+              <Link to="/saved" className="text-sm hover:underline" onClick={handleSaved}>
+                Saved Pages
+              </Link>
+              <hr className="border-ui-border mt-2" />
+            </div>
+
+            <div className="mt-7 flex flex-col items-start gap-1">
+              <h6 className="text-sm font-semibold">My Profile</h6>
+              <button className="text-sm hover:underline" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

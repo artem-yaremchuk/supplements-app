@@ -14,7 +14,7 @@ const PrivateRoute = ({ children }: PrivateRouteProps) => {
 
   if (isRefreshing) return <Loader />;
 
-  return isLoggedIn ? children : <Navigate to="/login" />;
+  return isLoggedIn ? children : <Navigate to="/" />;
 };
 
 export default PrivateRoute;

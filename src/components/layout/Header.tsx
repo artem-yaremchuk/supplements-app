@@ -1,19 +1,37 @@
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { useState } from 'react';
+import { Menu } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 import UserMenu from '../UserMenu';
+import LoginForm from '../LoginForm';
+import BurgerMenuModal from '../BurgerMenuModal';
 
 const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
     <header className="bg-ui-bg border-b px-6 py-4 shadow-sm">
-      <nav className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-        <NavLink to="/" className="text-accent text-xl font-bold">
-          SupplementsApp
-        </NavLink>
+      <nav className="flex items-center justify-between">
+        <div className="flex items-center gap-4 sm:gap-6">
+          <button
+            onClick={toggleMenu}
+            className="hover:text-hover transition-colors sm:hidden"
+            aria-label="Open menu"
+            type="button"
+          >
+            <Menu size={24} />
+          </button>
 
-        <ul className="flex gap-6 text-sm font-medium">
+          <NavLink to="/" className="text-accent text-xl font-bold">
+            SupplementsApp
+          </NavLink>
+        </div>
+
+        <ul className="hidden gap-6 text-sm font-medium sm:flex">
           <li>
             <NavLink
               to="/"
@@ -32,8 +50,10 @@ const Header = () => {
           </li>
         </ul>
 
-        {!isLoggedIn && <UserMenu />}
+        {isLoggedIn ? <UserMenu /> : <LoginForm />}
       </nav>
+
+      <BurgerMenuModal isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
     </header>
   );
 };
