@@ -46,8 +46,8 @@ const SupplementsPage = () => {
 
   return (
     <main>
-      <section className="py mx-auto max-w-full space-y-6 p-6">
-        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+      <section className="mx-auto max-w-full p-6">
+        <div className="mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <h1 className="text-2xl font-bold">Supplements encyclopedia</h1>
 
           <div className="flex gap-2">
