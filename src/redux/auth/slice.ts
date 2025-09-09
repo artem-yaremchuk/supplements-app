@@ -1,7 +1,7 @@
 import type { User, AuthResponse } from '../../types/auth';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { register, login, refreshUser, logout } from './operations';
+import { registerUser, login, refreshUser, logout } from './operations';
 import { AUTH_ERROR_MESSAGES } from '../../constants/errors';
 
 interface AuthState {
@@ -26,18 +26,21 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(register.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
+      .addCase(registerUser.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
         state.user = action.payload.user;
-        state.token = action.payload.access_token;
+        state.token = action.payload.token;
         state.isLoggedIn = true;
         state.error = null;
       })
-      .addCase(register.rejected, (state: AuthState, action: PayloadAction<string | undefined>) => {
-        state.error = action.payload || AUTH_ERROR_MESSAGES.REGISTER_FAILED;
-      })
+      .addCase(
+        registerUser.rejected,
+        (state: AuthState, action: PayloadAction<string | undefined>) => {
+          state.error = action.payload || AUTH_ERROR_MESSAGES.REGISTER_FAILED;
+        },
+      )
       .addCase(login.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
         state.user = action.payload.user;
-        state.token = action.payload.access_token;
+        state.token = action.payload.token;
         state.isLoggedIn = true;
         state.error = null;
       })

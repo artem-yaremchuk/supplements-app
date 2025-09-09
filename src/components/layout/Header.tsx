@@ -2,13 +2,13 @@ import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import UserMenu from '../UserMenu';
-import LoginForm from '../LoginForm';
 import BurgerMenuModal from '../BurgerMenuModal';
 
 const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -50,7 +50,13 @@ const Header = () => {
           </li>
         </ul>
 
-        {isLoggedIn ? <UserMenu /> : <LoginForm />}
+        {isLoggedIn ? (
+          <UserMenu />
+        ) : (
+          <Link to="/login" className="hover:text-hover transition-colors">
+            Login
+          </Link>
+        )}
       </nav>
 
       <BurgerMenuModal isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />

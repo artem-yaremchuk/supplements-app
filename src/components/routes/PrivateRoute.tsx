@@ -1,20 +1,22 @@
-import type { ReactNode } from 'react';
+import type { JSX } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn, selectIsRefreshing } from '../../redux/auth/selectors';
+import { selectIsLoggedIn, selectIsRefreshing, selectToken } from '../../redux/auth/selectors';
 import Loader from '../ui/Loader';
 
 interface PrivateRouteProps {
-  children: ReactNode;
+  component: JSX.Element;
+  redirectTo?: string;
 }
 
-const PrivateRoute = ({ children }: PrivateRouteProps) => {
+const PrivateRoute = ({ component, redirectTo = '/' }: PrivateRouteProps) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
+  const token = useSelector(selectToken);
 
-  if (isRefreshing) return <Loader />;
+  if (isRefreshing || (token && !isLoggedIn)) return <Loader />;
 
-  return isLoggedIn ? children : <Navigate to="/" />;
+  return isLoggedIn ? component : <Navigate to={redirectTo} />;
 };
 
 export default PrivateRoute;

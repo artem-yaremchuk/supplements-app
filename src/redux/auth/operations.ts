@@ -12,13 +12,14 @@ interface Credentials {
   password: string;
 }
 
-export const register = createAsyncThunk<AuthResponse, Credentials, { rejectValue: string }>(
+export const registerUser = createAsyncThunk<AuthResponse, Credentials, { rejectValue: string }>(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const response = await api.post('/auth/register', credentials);
+      // TODO: Switch to 'auth/register' after migrating to own server (using temporary API now)
+      const response = await api.post('/users/signup', credentials);
 
-      setAuthHeader(response.data.access_token);
+      setAuthHeader(response.data.token);
 
       toast.success(`${credentials.name}, welcome to the Supplements App!`);
 
@@ -42,9 +43,10 @@ export const login = createAsyncThunk<
   { rejectValue: string }
 >('auth/login', async (credentials, thunkAPI) => {
   try {
-    const response = await api.post('/auth/login', credentials);
+    // TODO: Switch to '/auth/login' after migrating to own server (using temporary API now)
+    const response = await api.post('/users/login', credentials);
 
-    setAuthHeader(response.data.access_token);
+    setAuthHeader(response.data.token);
 
     toast.success('You are now logged in.');
 
@@ -73,15 +75,14 @@ export const refreshUser = createAsyncThunk<
 
   try {
     setAuthHeader(token);
-    const response = await api.get('/auth/current');
+    // TODO: Switch to '/auth/current' after migrating to own server (using temporary API now)
+    const response = await api.get('/users/current');
     return response.data;
   } catch (e) {
     const errorMessage =
       axios.isAxiosError(e) && e.response?.data?.message
         ? e.response.data.message
         : AUTH_ERROR_MESSAGES.REFRESH_USER_FAILED;
-
-    toast.error(errorMessage);
 
     return thunkAPI.rejectWithValue(errorMessage);
   }
@@ -91,7 +92,8 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
-      await api.post('/auth/logout');
+      // TODO: Switch to '/auth/logout' after migrating to own server (using temporary API now)
+      await api.post('/users/logout');
 
       clearAuthHeader();
 
