@@ -42,7 +42,7 @@ const UserMenu = () => {
       <button
         onClick={toggleMenu}
         type="button"
-        className="flex items-center gap-2 rounded-full px-3 py-2"
+        className="hover:border-hover flex items-center gap-2 rounded-full px-2 py-1 transition-colors"
       >
         <CircleUserRound size={30} strokeWidth={1} />
 
@@ -62,20 +62,22 @@ const UserMenu = () => {
             <p className="text-secondary-text text-sm">Free Account</p>
             <hr className="border-ui-border mt-2" />
 
-            <div className="mt-7 flex flex-col gap-1">
-              <h6 className="text-sm font-semibold">My Content</h6>
-              <Link to="/saved" className="text-sm hover:underline" onClick={handleSaved}>
-                Saved Pages
-              </Link>
-              <hr className="border-ui-border mt-2" />
-            </div>
+            <ul>
+              <li className="mt-7 flex flex-col gap-1">
+                <p className="text-sm font-semibold">My Content</p>
+                <Link to="/saved" className="text-sm hover:underline" onClick={handleSaved}>
+                  Saved Pages
+                </Link>
+                <hr className="border-ui-border mt-2" />
+              </li>
 
-            <div className="mt-7 flex flex-col items-start gap-1">
-              <h6 className="text-sm font-semibold">My Profile</h6>
-              <button className="text-sm hover:underline" onClick={handleLogout}>
-                Logout
-              </button>
-            </div>
+              <li className="mt-7 flex flex-col items-start gap-1">
+                <p className="text-sm font-semibold">My Profile</p>
+                <button className="text-sm hover:underline" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
