@@ -1,7 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
+// TODO: Replace mock logic with actual API call once my own server is ready
+// Original code:
+/* import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../redux/store.ts';
 import { selectItems, selectIsLoading, selectError } from '../redux/supplements/selectors';
 import { fetchSupplements } from '../redux/supplements/operations.ts';
+*/
+import { supplements } from '../mocks/supplements';
+import type { Supplement } from '../types/supplements';
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ThemeToggle from '../components/ui/ThemeToggle';
@@ -9,6 +14,8 @@ import Loader from '../components/ui/Loader';
 import SupplementList from '../components/SupplementList';
 
 const SupplementsPage = () => {
+  // Original code:
+  /*
   const dispatch = useDispatch<AppDispatch>();
   const items = useSelector(selectItems);
   const isLoading = useSelector(selectIsLoading);
@@ -17,6 +24,26 @@ const SupplementsPage = () => {
   useEffect(() => {
     dispatch(fetchSupplements());
   }, [dispatch]);
+  */
+
+  const [items, setItems] = useState<Supplement[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      try {
+        setItems(supplements);
+        setIsLoading(false);
+      } catch (e) {
+        const errorMessage = (e as Error)?.message ?? 'Failed to load supplements';
+        setError(errorMessage);
+        setIsLoading(false);
+      }
+    }, 500); // simulate loading delay
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
