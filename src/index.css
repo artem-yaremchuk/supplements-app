@@ -18,10 +18,11 @@
   --color-overlay-bg: rgba(0, 0, 0, 0.5); /* dark overlay for hero section */
   --color-modal-bg: #fff;
   --color-soft-bg: oklch(96.7% 0.003 264.542); /* gray-100 */
-  --color-ui-bg: #fff; /* inputs, buttons, header */
+  --color-ui-bg: #fff; /* inputs, buttons, header, form */
   --color-ui-border: oklch(87.2% 0.01 258.338); /* gray-300 */
   --color-input-text: var(--color-main-text);
   --color-btn-text: var(--color-main-text);
+  --color-errors-text: oklch(57.7% 0.245 27.325); /* red-600 */
 }
 
 body {
