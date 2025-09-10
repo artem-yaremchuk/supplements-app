@@ -6,6 +6,7 @@ const SupplementDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
+  // TODO: Replace mock logic with actual API call once my own server is ready
   const item = supplements.find((s) => s.id === id);
 
   return item ? (

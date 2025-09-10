@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store.ts';
 import { ThemeProvider } from './context/ThemeContext.tsx';
 import { PersistGate } from 'redux-persist/integration/react';
-import Loader from './components/ui/Loader.tsx';
+import Loader from './components/Loader.tsx';
 import { BrowserRouter } from 'react-router';
 import App from './App.tsx';
 import './index.css';

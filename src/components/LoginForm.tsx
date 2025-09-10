@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../redux/store.ts';
 import { useForm } from 'react-hook-form';
@@ -8,6 +9,8 @@ import type { LoginFormValues } from '../schemas/authSchema.ts';
 import { login } from '../redux/auth/operations.ts';
 
 const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const dispatch = useDispatch<AppDispatch>();
 
   const {
@@ -38,19 +41,30 @@ const LoginForm = () => {
       </div>
 
       <div className="flex flex-col gap-1">
-        <input
-          {...register('password')}
-          placeholder="Password"
-          type="password"
-          autoComplete="new-password"
-          className="border-ui-border bg-ui-bg text-input-text focus-visible:border-focus w-full rounded border px-4 py-2 transition-colors outline-none"
-        />
+        <div className="relative">
+          <input
+            {...register('password')}
+            placeholder="Password"
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="current-password"
+            className="border-ui-border bg-ui-bg text-input-text focus-visible:border-focus w-full rounded border py-2 pr-14 pl-4 transition-colors outline-none"
+          />
+
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="text-btn-bg hover:text-btn-bg-hover absolute top-1/2 right-3 -translate-y-1/2 text-xs font-semibold"
+          >
+            {showPassword ? 'HIDE' : 'SHOW'}
+          </button>
+        </div>
+
         {errors.password && <p className="text-errors-text text-sm">{errors.password.message}</p>}
       </div>
 
       <button
         type="submit"
-        className="bg-link-bg hover:bg-link-bg-hover w-full rounded px-4 py-2 text-center text-white transition-colors"
+        className="bg-btn-bg hover:bg-btn-bg-hover w-full rounded px-4 py-2 text-center text-white transition-colors"
       >
         Login
       </button>

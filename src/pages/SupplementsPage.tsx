@@ -9,8 +9,8 @@ import { supplements } from '../mocks/supplements';
 import type { Supplement } from '../types/supplements';
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import ThemeToggle from '../components/ui/ThemeToggle';
-import Loader from '../components/ui/Loader';
+import ThemeToggle from '../components/ThemeToggle';
+import Loader from '../components/Loader';
 import SupplementList from '../components/SupplementList';
 
 const SupplementsPage = () => {
@@ -73,7 +73,7 @@ const SupplementsPage = () => {
 
   return (
     <main>
-      <section className="mx-auto max-w-full p-6">
+      <section className="min-h-screen p-6">
         <div className="mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <h1 className="text-2xl font-bold">Supplements encyclopedia</h1>
 
