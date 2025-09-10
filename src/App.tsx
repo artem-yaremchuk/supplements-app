@@ -1,7 +1,7 @@
 import { lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from './redux/store';
-import { selectIsRefreshing } from './redux/auth/selectors';
+import { selectIsRefreshing, selectToken } from './redux/auth/selectors';
 import { refreshUser } from './redux/auth/operations';
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { useTheme } from './context/ThemeContext';
@@ -21,10 +21,11 @@ const SavedPage = lazy(() => import('./pages/SavedPage'));
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
   const isRefreshing = useSelector(selectIsRefreshing);
+  const token = useSelector(selectToken);
 
   useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+    if (token) dispatch(refreshUser());
+  }, [dispatch, token]);
 
   const location = useLocation();
 
