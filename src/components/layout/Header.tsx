@@ -3,6 +3,7 @@ import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { NavLink, Link } from 'react-router-dom';
+import ThemeToggle from '../ThemeToggle';
 import UserMenu from '../UserMenu';
 import BurgerMenuModal from '../BurgerMenuModal';
 
@@ -50,13 +51,17 @@ const Header = () => {
           </li>
         </ul>
 
-        {isLoggedIn ? (
-          <UserMenu />
-        ) : (
-          <Link to="/login" className="hover:text-hover transition-colors">
-            Login
-          </Link>
-        )}
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+
+          {isLoggedIn ? (
+            <UserMenu />
+          ) : (
+            <Link to="/login" className="hover:text-hover transition-colors">
+              Login
+            </Link>
+          )}
+        </div>
       </nav>
 
       <BurgerMenuModal isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />

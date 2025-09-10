@@ -9,7 +9,6 @@ import { supplements } from '../mocks/supplements';
 import type { Supplement } from '../types/supplements';
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import ThemeToggle from '../components/ThemeToggle';
 import Loader from '../components/Loader';
 import SupplementList from '../components/SupplementList';
 
@@ -84,8 +83,6 @@ const SupplementsPage = () => {
             placeholder="Search"
             className="focus:border-focus bg-ui-bg text-input-text border-ui-border w-full rounded border px-3 py-2 transition-colors outline-none sm:w-80"
           />
-
-          <ThemeToggle />
         </div>
       </div>
 
