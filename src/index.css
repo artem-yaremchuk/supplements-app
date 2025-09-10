@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -55,7 +56,7 @@ button {
   --color-link-text-active: oklch(65% 0.11 165); /* active nav link ~emerald-500 */
 
   --color-modal-bg: #1a1a1a; /* deep warm black */
-  --color-soft-bg: oklch(36% 0.02 125); /* dark soft */
+  --color-soft-bg: oklch(40% 0.02 125); /* dark soft */
 
   --color-ui-bg: #2b2b2b;
   --color-ui-border: #525252;
