@@ -14,14 +14,22 @@
   /* UI elements */
   --color-link-bg: oklch(50.8% 0.118 165.612); /* link bg emerald-700 */
   --color-link-bg-hover: oklch(59.6% 0.145 163.225); /* hover for Browse button emerald-600 */
+
   --color-link-text-active: oklch(50.8% 0.118 165.612); /* active nav link emerald-700 */
+
+  --color-btn-text: var(--color-main-text);
+  --color-btn-bg: oklch(50.8% 0.118 165.612); /* link bg emerald-700 */
+  --color-btn-bg-hover: oklch(59.6% 0.145 163.225); /* hover for Browse button emerald-600 */
+
   --color-overlay-bg: rgba(0, 0, 0, 0.5); /* dark overlay for hero section */
   --color-modal-bg: #fff;
   --color-soft-bg: oklch(96.7% 0.003 264.542); /* gray-100 */
-  --color-ui-bg: #fff; /* inputs, buttons, header, form */
+
+  --color-ui-bg: #fff; /* inputs, buttons, header, forms */
   --color-ui-border: oklch(87.2% 0.01 258.338); /* gray-300 */
+
   --color-input-text: var(--color-main-text);
-  --color-btn-text: var(--color-main-text);
+
   --color-errors-text: oklch(57.7% 0.245 27.325); /* red-600 */
 }
 
@@ -45,10 +53,13 @@ button {
 
   /* UI elements */
   --color-link-text-active: oklch(65% 0.11 165); /* active nav link ~emerald-500 */
+
   --color-modal-bg: #1a1a1a; /* deep warm black */
-  --color-soft-bg: oklch(32% 0.02 125); /* dark soft */
+  --color-soft-bg: oklch(36% 0.02 125); /* dark soft */
+
   --color-ui-bg: #2b2b2b;
   --color-ui-border: #525252;
+
   --color-input-text: #fff;
   --color-btn-text: #fff;
 

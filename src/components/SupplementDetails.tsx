@@ -15,7 +15,7 @@ const SupplementDetails = ({ item, onClose }: Props) => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-modal-bg w-full max-w-lg rounded-xl p-6 shadow-lg"
+        className="bg-ui-bg w-full max-w-lg rounded-xl p-6 shadow-lg"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}

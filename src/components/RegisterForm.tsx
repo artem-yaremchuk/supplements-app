@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../redux/store.ts';
 import { useForm } from 'react-hook-form';
@@ -8,6 +9,9 @@ import type { RegisterFormValues } from '../schemas/authSchema.ts';
 import { registerUser } from '../redux/auth/operations.ts';
 
 const RegisterForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const dispatch = useDispatch<AppDispatch>();
 
   const {
@@ -55,24 +59,46 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex flex-col gap-1">
-        <input
-          {...register('password')}
-          placeholder="Password"
-          type="password"
-          autoComplete="new-password"
-          className="border-ui-border bg-ui-bg text-input-text focus-visible:border-focus w-full rounded border px-4 py-2 transition-colors outline-none"
-        />
+        <div className="relative">
+          <input
+            {...register('password')}
+            placeholder="Password"
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="new-password"
+            className="border-ui-border bg-ui-bg text-input-text focus-visible:border-focus w-full rounded border py-2 pr-14 pl-4 transition-colors outline-none"
+          />
+
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="text-btn-bg hover:text-btn-bg-hover absolute top-1/2 right-3 -translate-y-1/2 text-xs font-semibold"
+          >
+            {showPassword ? 'HIDE' : 'SHOW'}
+          </button>
+        </div>
+
         {errors.password && <p className="text-errors-text text-sm">{errors.password.message}</p>}
       </div>
 
       <div className="flex flex-col gap-1">
-        <input
-          {...register('confirmPassword')}
-          placeholder="Confirm Password"
-          type="password"
-          autoComplete="new-password"
-          className="border-ui-border bg-ui-bg text-input-text focus-visible:border-focus w-full rounded border px-4 py-2 transition-colors outline-none"
-        />
+        <div className="relative">
+          <input
+            {...register('confirmPassword')}
+            placeholder="Confirm Password"
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="new-password"
+            className="border-ui-border bg-ui-bg text-input-text focus-visible:border-focus w-full rounded border px-4 py-2 transition-colors outline-none"
+          />
+
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword((prev) => !prev)}
+            className="text-btn-bg hover:text-btn-bg-hover absolute top-1/2 right-3 -translate-y-1/2 text-xs font-semibold"
+          >
+            {showConfirmPassword ? 'HIDE' : 'SHOW'}
+          </button>
+        </div>
+
         {errors.confirmPassword && (
           <p className="text-errors-text text-sm">{errors.confirmPassword.message}</p>
         )}
@@ -80,7 +106,7 @@ const RegisterForm = () => {
 
       <button
         type="submit"
-        className="bg-link-bg hover:bg-link-bg-hover w-full rounded px-4 py-2 text-center text-white transition-colors"
+        className="bg-btn-bg hover:bg-btn-bg-hover w-full rounded px-4 py-2 text-center text-white transition-colors"
       >
         Create a free account
       </button>

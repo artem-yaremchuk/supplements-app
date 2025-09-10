@@ -6,7 +6,7 @@ import { refreshUser } from './redux/auth/operations';
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { useTheme } from './context/ThemeContext';
 import Layout from './components/layout/Layout';
-import Loader from './components/ui/Loader';
+import Loader from './components/Loader';
 import PrivateRoute from './components/routes/PrivateRoute';
 import RestrictedRoute from './components/routes/RestrictedRoute';
 
