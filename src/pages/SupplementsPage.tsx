@@ -72,33 +72,31 @@ const SupplementsPage = () => {
   };
 
   return (
-    <main>
-      <section className="min-h-screen p-6">
-        <div className="mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-          <h1 className="text-2xl font-bold">Supplements encyclopedia</h1>
+    <section className="p-6">
+      <div className="mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+        <h1 className="text-2xl font-bold">Supplements encyclopedia</h1>
 
-          <div className="flex gap-2">
-            <input
-              ref={inputRef}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search"
-              className="focus:border-focus bg-ui-bg text-input-text border-ui-border w-full rounded border px-3 py-2 transition-colors outline-none sm:w-80"
-            />
+        <div className="flex gap-2">
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search"
+            className="focus:border-focus bg-ui-bg text-input-text border-ui-border w-full rounded border px-3 py-2 transition-colors outline-none sm:w-80"
+          />
 
-            <ThemeToggle />
-          </div>
+          <ThemeToggle />
         </div>
+      </div>
 
-        {isLoading && !error && <Loader />}
+      {isLoading && !error && <Loader />}
 
-        {error && (
-          <p className="flex flex-col items-center justify-center gap-2 p-6 text-[18px]">{error}</p>
-        )}
+      {error && (
+        <p className="flex flex-col items-center justify-center gap-2 p-6 text-[18px]">{error}</p>
+      )}
 
-        <SupplementList items={filtered} onOpen={handleOpen} />
-      </section>
-    </main>
+      <SupplementList items={filtered} onOpen={handleOpen} />
+    </section>
   );
 };
 

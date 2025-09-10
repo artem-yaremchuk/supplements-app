@@ -9,7 +9,7 @@ interface Props {
 const SupplementDetails = ({ item, onClose }: Props) => {
   return (
     <motion.div
-      className="bg-overlay-bg fixed inset-0 z-50 flex items-center justify-center"
+      className="bg-overlay-bg fixed inset-0 z-60 flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

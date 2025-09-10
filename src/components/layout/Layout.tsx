@@ -8,9 +8,13 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <main className="relative min-h-[calc(100vh-64px)]">
+        {' '}
+        {/* якщо хедер ~64px */}
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
+      </main>
       <Toaster position="bottom-right" reverseOrder={false} />
     </>
   );
