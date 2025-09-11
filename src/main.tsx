@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <ThemeProvider>
         <PersistGate loading={<Loader />} persistor={persistor}>
-          <BrowserRouter basename="/supplements-app/">
+          <BrowserRouter>
             <App />
           </BrowserRouter>
         </PersistGate>
