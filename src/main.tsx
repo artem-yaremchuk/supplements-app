@@ -9,12 +9,14 @@ import { BrowserRouter } from 'react-router';
 import App from './App.tsx';
 import './index.css';
 
+const basename = import.meta.env.VITE_BASE_PATH;
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <ThemeProvider>
         <PersistGate loading={<Loader />} persistor={persistor}>
-          <BrowserRouter basename="/supplements-app/">
+          <BrowserRouter basename={basename}>
             <App />
           </BrowserRouter>
         </PersistGate>
