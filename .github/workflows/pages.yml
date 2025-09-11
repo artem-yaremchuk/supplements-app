@@ -23,6 +23,7 @@ jobs:
       - run: npm run build:github
       # (опційно для SPA-роутінгу): зробити fallback
       - run: cp dist/index.html dist/404.html
+      - run: cp dist/index.html dist/200.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
