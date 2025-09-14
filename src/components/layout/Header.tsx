@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <header className="bg-ui-bg border-b px-6 py-4 shadow-sm">
       <nav className="flex items-center justify-between">
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex items-center gap-3">
           <button
             onClick={toggleMenu}
             className="hover:text-hover transition-colors sm:hidden"
@@ -27,7 +27,7 @@ const Header = () => {
             <Menu size={24} />
           </button>
 
-          <NavLink to="/" className="text-accent text-xl font-bold">
+          <NavLink to="/" className="text-accent text-lg font-bold sm:text-xl">
             SupplementsApp
           </NavLink>
         </div>
@@ -51,7 +51,7 @@ const Header = () => {
           </li>
         </ul>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <ThemeToggle />
 
           {isLoggedIn ? (
