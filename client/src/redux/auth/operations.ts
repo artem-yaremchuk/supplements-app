@@ -75,7 +75,7 @@ export const refreshUser = createAsyncThunk<
 
   try {
     setAuthHeader(token);
-    // TODO: Switch to '/auth/current' after migrating to own server (using temporary API now)
+    // TODO: Switch to '/auth/me' after migrating to own server (using temporary API now)
     const response = await api.get('/users/current');
     return response.data;
   } catch (e) {
