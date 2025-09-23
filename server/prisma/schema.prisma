@@ -13,7 +13,7 @@ model User {
   email     String   @unique
   role      Role     @default(USER)
   password  String
-  lastLogin DateTime
+  lastLogin DateTime @default(now())
   createdAt DateTime @default(now())
 }
 
