@@ -9,9 +9,6 @@ export class UserResponseDto {
 
   @ApiProperty({ example: 'john.doe@company.com' })
   email: string;
-
-  @ApiProperty({ example: 'USER' })
-  role: string;
 }
 
 export class AuthResponseDto {

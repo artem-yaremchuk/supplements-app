@@ -8,6 +8,7 @@ import { Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { AuthResponseDto } from './dto/auth.response.dto';
+import { UserResponseDto } from './dto/auth.response.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 
@@ -51,14 +52,16 @@ export class AuthService {
 
     this.logger.log(`User '${user.id}' successfully signed up`);
 
+    const { role, ...userData } = user;
+
     const payload = {
       sub: user.id,
-      role: user.role,
+      role,
     };
 
     const access_token = await this.jwtService.signAsync(payload);
 
-    return { user, access_token };
+    return { user: userData, access_token };
   }
 
   public async login(
@@ -83,7 +86,9 @@ export class AuthService {
       throw new NotFoundException('User not found');
     }
 
-    const compare = await bcrypt.compare(loginRequest.password, user.password);
+    const { role, password, ...userData } = user;
+
+    const compare = await bcrypt.compare(loginRequest.password, password);
 
     if (!compare) {
       this.logger.warn(`Login failed: invalid credentials for email: ${maskedEmail}`);
@@ -99,18 +104,29 @@ export class AuthService {
 
     const payload = {
       sub: user.id,
-      role: user.role,
+      role,
     };
 
     const access_token = await this.jwtService.signAsync(payload);
 
-    const safeUser: Omit<typeof user, 'password'> = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    };
+    return { user: userData, access_token };
+  }
 
-    return { user: safeUser, access_token };
+  async findUserById(userId: string): Promise<UserResponseDto> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+
+    if (!user) {
+      this.logger.warn(`User '${userId}' not found`);
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 }
