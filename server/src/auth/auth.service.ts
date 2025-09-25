@@ -50,8 +50,6 @@ export class AuthService {
       },
     });
 
-    this.logger.log(`User '${user.id}' successfully signed up`);
-
     const { role, ...userData } = user;
 
     const payload = {
@@ -60,6 +58,13 @@ export class AuthService {
     };
 
     const access_token = await this.jwtService.signAsync(payload);
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { token: access_token },
+    });
+
+    this.logger.log(`User '${user.id}' successfully signed up`);
 
     return { user: userData, access_token };
   }
@@ -95,19 +100,19 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    await this.prisma.user.update({
-      where: { id: user.id },
-      data: { lastLogin: new Date() },
-    });
-
-    this.logger.log(`User '${user.id}' successfully logged in`);
-
     const payload = {
       sub: user.id,
       role,
     };
 
     const access_token = await this.jwtService.signAsync(payload);
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { token: access_token, lastLogin: new Date() },
+    });
+
+    this.logger.log(`User '${user.id}' successfully logged in`);
 
     return { user: userData, access_token };
   }
@@ -128,5 +133,14 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  async logout(userId: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { token: null },
+    });
+
+    this.logger.log(`User '${userId}' successfully logged out`);
   }
 }

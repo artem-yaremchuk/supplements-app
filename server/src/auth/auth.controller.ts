@@ -1,10 +1,11 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   ApiTags,
   ApiOperation,
   ApiOkResponse,
   ApiCreatedResponse,
+  ApiNoContentResponse,
   ApiBadRequestResponse,
   ApiUnauthorizedResponse,
   ApiConflictResponse,
@@ -75,5 +76,22 @@ export class AuthController {
     const userId = req.user.sub;
 
     return await this.authService.findUserById(userId);
+  }
+
+  @ApiOperation({ summary: 'Logout' })
+  @ApiNoContentResponse({
+    description: 'User successfully logged out',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid credentials',
+  })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post('logout')
+  async logout(@Req() req: AuthenticatedRequest): Promise<void> {
+    const userId = req.user.sub;
+
+    await this.authService.logout(userId);
   }
 }

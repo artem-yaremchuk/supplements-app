@@ -13,6 +13,7 @@ model User {
   email     String   @unique
   role      Role     @default(USER)
   password  String
+  token     String?
   lastLogin DateTime @default(now())
   createdAt DateTime @default(now())
 }
