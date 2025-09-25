@@ -5,13 +5,14 @@ services:
     plan: free
     region: frankfurt
     repo: https://github.com/artem-yaremchuk/supplements-app
+    rootDir: server
     buildCommand: |
-      cd server
       npm install
       npx prisma generate
       npm run build
+      ls -R dist
       npx prisma migrate deploy
-    startCommand: cd server && npm run start:prod
+    startCommand: npm run start:prod
     autoDeployTrigger: checksPass
     envVars:
       - key: DATABASE_URL
