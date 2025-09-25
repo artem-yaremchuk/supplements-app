@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: supplements-server
+    runtime: node
+    plan: free
+    region: frankfurt
+    repo: https://github.com/artem-yaremchuk/supplements-app
+    rootDir: server
+    buildCommand: |
+      npm install
+      npx prisma generate
+      npm run build
+      npx prisma migrate deploy
+    startCommand: npm run start:prod
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        sync: false
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22 
