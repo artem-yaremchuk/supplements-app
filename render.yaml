@@ -10,7 +10,6 @@ services:
       npm install
       npx prisma generate
       npm run build
-      ls -R dist
       npx prisma migrate deploy
     startCommand: npm run start:prod
     autoDeployTrigger: checksPass
