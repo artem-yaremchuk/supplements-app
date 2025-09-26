@@ -7,9 +7,12 @@ services:
     repo: https://github.com/artem-yaremchuk/supplements-app
     rootDir: server
     buildCommand: |
+      rm -rf dist
       npm install
       npx prisma generate
       npm run build
+      echo "===== DIST CONTENT ====="
+      ls -R dist
       npx prisma migrate deploy
     startCommand: npm run start:prod
     autoDeployTrigger: checksPass
