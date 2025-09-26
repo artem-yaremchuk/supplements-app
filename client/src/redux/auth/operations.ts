@@ -16,8 +16,7 @@ export const registerUser = createAsyncThunk<AuthResponse, Credentials, { reject
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      // TODO: Switch to 'auth/register' after migrating to own server (using temporary API now)
-      const response = await api.post('/users/signup', credentials);
+      const response = await api.post('/auth/register', credentials);
 
       setAuthHeader(response.data.token);
 
@@ -43,8 +42,7 @@ export const login = createAsyncThunk<
   { rejectValue: string }
 >('auth/login', async (credentials, thunkAPI) => {
   try {
-    // TODO: Switch to '/auth/login' after migrating to own server (using temporary API now)
-    const response = await api.post('/users/login', credentials);
+    const response = await api.post('/auth/login', credentials);
 
     setAuthHeader(response.data.token);
 
@@ -75,8 +73,7 @@ export const refreshUser = createAsyncThunk<
 
   try {
     setAuthHeader(token);
-    // TODO: Switch to '/auth/me' after migrating to own server (using temporary API now)
-    const response = await api.get('/users/current');
+    const response = await api.get('/auth/profile');
     return response.data;
   } catch (e) {
     const errorMessage =
@@ -92,8 +89,7 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
-      // TODO: Switch to '/auth/logout' after migrating to own server (using temporary API now)
-      await api.post('/users/logout');
+      await api.post('/auth/logout');
 
       clearAuthHeader();
 

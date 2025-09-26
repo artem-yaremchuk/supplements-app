@@ -28,7 +28,7 @@ export const authSlice = createSlice({
     builder
       .addCase(registerUser.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action.payload.access_token;
         state.isLoggedIn = true;
         state.error = null;
       })
@@ -40,7 +40,7 @@ export const authSlice = createSlice({
       )
       .addCase(login.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action.payload.access_token;
         state.isLoggedIn = true;
         state.error = null;
       })
