@@ -1,0 +1,15 @@
+model Supplement {
+  id String @id @default(uuid())
+  name String
+  shortDesc String
+  fullDesc String
+  mechanisms String[]
+  evidence Evidence
+}
+
+enum Evidence {
+  HIGH
+  MODERATE
+  LOW
+  INSUFFICIENT
+}
