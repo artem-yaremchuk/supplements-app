@@ -1,10 +1,10 @@
 import {
+  Logger,
+  Injectable,
   UnauthorizedException,
   NotFoundException,
   ConflictException,
-  Injectable,
 } from '@nestjs/common';
-import { Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { AuthResponseDto } from './dto/auth.response.dto';

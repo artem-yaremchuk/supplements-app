@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { Roles } from '../../constants/enums';
+import type { Role } from '@prisma/client';
 
 export interface AuthenticatedRequest extends Request {
   user: JwtPayload;
@@ -7,5 +7,5 @@ export interface AuthenticatedRequest extends Request {
 
 export interface JwtPayload {
   sub: string;
-  role: Roles;
+  role: Role;
 }

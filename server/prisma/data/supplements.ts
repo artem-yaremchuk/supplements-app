@@ -2,7 +2,6 @@ import type { Prisma } from '@prisma/client';
 
 export const supplements = [
   {
-    id: '1',
     name: 'Creatine Monohydrate',
     shortDesc: 'Improves strength & power. Cognitive benefits.',
     fullDesc:
@@ -11,7 +10,6 @@ export const supplements = [
     evidence: 'HIGH',
   },
   {
-    id: '2',
     name: 'Vitamin D',
     shortDesc: 'Bone health, immune modulation. Deficiency common.',
     fullDesc:
@@ -20,7 +18,6 @@ export const supplements = [
     evidence: 'HIGH',
   },
   {
-    id: '3',
     name: 'Ashwagandha',
     shortDesc: 'Stress management. Ergogenic effects on physical performance.',
     fullDesc:
@@ -29,7 +26,6 @@ export const supplements = [
     evidence: 'MODERATE',
   },
   {
-    id: '4',
     name: 'Magnesium',
     shortDesc: 'Supports muscle & nerve function. Aids sleep.',
     fullDesc:
@@ -38,7 +34,6 @@ export const supplements = [
     evidence: 'HIGH',
   },
   {
-    id: '5',
     name: 'Omega-3 (Fish Oil)',
     shortDesc: 'Supports heart & brain health. Anti-inflammatory.',
     fullDesc:
@@ -47,7 +42,6 @@ export const supplements = [
     evidence: 'HIGH',
   },
   {
-    id: '6',
     name: 'Collagen',
     shortDesc: 'Supports skin, joint, and bone health.',
     fullDesc:
@@ -56,7 +50,6 @@ export const supplements = [
     evidence: 'MODERATE',
   },
   {
-    id: '7',
     name: 'Zinc',
     shortDesc: 'Supports immunity and hormone function.',
     fullDesc:
@@ -65,7 +58,6 @@ export const supplements = [
     evidence: 'MODERATE',
   },
   {
-    id: '8',
     name: 'Melatonin',
     shortDesc: 'Regulates sleep-wake cycle. Helpful for jet lag & insomnia.',
     fullDesc:
@@ -74,7 +66,6 @@ export const supplements = [
     evidence: 'HIGH',
   },
   {
-    id: '9',
     name: 'Probiotics',
     shortDesc: 'Supports gut health and digestion.',
     fullDesc:
@@ -83,7 +74,6 @@ export const supplements = [
     evidence: 'MODERATE',
   },
   {
-    id: '10',
     name: 'Curcumin',
     shortDesc: 'Anti-inflammatory. May relieve joint pain.',
     fullDesc:
@@ -92,7 +82,6 @@ export const supplements = [
     evidence: 'MODERATE',
   },
   {
-    id: '11',
     name: 'Glucosamine',
     shortDesc: 'Joint support. May reduce osteoarthritis symptoms.',
     fullDesc:
@@ -101,7 +90,6 @@ export const supplements = [
     evidence: 'MODERATE',
   },
   {
-    id: '12',
     name: 'Beta-Alanine',
     shortDesc: 'Delays muscle fatigue. Boosts performance in short bursts.',
     fullDesc:
