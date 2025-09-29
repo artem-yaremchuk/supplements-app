@@ -1,10 +1,10 @@
 model Supplement {
-  id String @id @default(uuid())
-  name String
-  shortDesc String
-  fullDesc String
+  id         String   @id @default(uuid())
+  name       String
+  shortDesc  String
+  fullDesc   String
   mechanisms String[]
-  evidence Evidence
+  evidence   Evidence
 }
 
 enum Evidence {
