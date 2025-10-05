@@ -1,48 +1,14 @@
-// TODO: Replace mock logic with actual API call once my own server is ready
-// Original code:
-/* import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch } from '../redux/store.ts';
-import { selectItems, selectIsLoading, selectError } from '../redux/supplements/selectors';
-import { fetchSupplements } from '../redux/supplements/operations.ts';
-*/
-import { supplements } from '../mocks/supplements';
-import type { Supplement } from '../types/supplements';
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import type { Supplement } from '@/types/supplements';
 import Loader from '../components/Loader';
 import SupplementList from '../components/SupplementList';
+import { useGetSupplementsQuery } from '../redux/supplements/supplements.api';
+
+const EMPTY_ITEMS: Supplement[] = [];
 
 const SupplementsPage = () => {
-  // Original code:
-  /*
-  const dispatch = useDispatch<AppDispatch>();
-  const items = useSelector(selectItems);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-
-  useEffect(() => {
-    dispatch(fetchSupplements());
-  }, [dispatch]);
-  */
-
-  const [items, setItems] = useState<Supplement[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      try {
-        setItems(supplements);
-        setIsLoading(false);
-      } catch (e) {
-        const errorMessage = (e as Error)?.message ?? 'Failed to load supplements';
-        setError(errorMessage);
-        setIsLoading(false);
-      }
-    }, 500); // simulate loading delay
-
-    return () => clearTimeout(timer);
-  }, []);
+  const { data: items = EMPTY_ITEMS, isLoading, error } = useGetSupplementsQuery();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -86,13 +52,13 @@ const SupplementsPage = () => {
         </div>
       </div>
 
-      {isLoading && !error && <Loader />}
-
+      {isLoading && <Loader />}
       {error && (
-        <p className="flex flex-col items-center justify-center gap-2 p-6 text-[18px]">{error}</p>
+        <p className="flex flex-col items-center justify-center gap-2 p-6 text-[18px]">
+          Failed to load supplements
+        </p>
       )}
-
-      <SupplementList items={filtered} onOpen={handleOpen} />
+      {!isLoading && !error && <SupplementList items={filtered} onOpen={handleOpen} />}
     </section>
   );
 };

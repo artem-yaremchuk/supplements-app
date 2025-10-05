@@ -1,7 +1,7 @@
 import type { User, AuthResponse } from '../../types/auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
-import { setAuthHeader, clearAuthHeader } from './api';
+import { setAuthHeader, clearAuthHeader } from './authApi';
 import axios from 'axios';
 import { AUTH_ERROR_MESSAGES } from '../../constants/errors';
 import toast from 'react-hot-toast';

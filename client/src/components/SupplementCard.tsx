@@ -6,6 +6,8 @@ interface Props {
 }
 
 const SupplementCard = ({ item, onOpen }: Props) => {
+  const formattedEvidence = item.evidence.charAt(0) + item.evidence.slice(1).toLowerCase();
+
   return (
     <div
       className="cursor-pointer rounded-xl border p-4 shadow-sm transition hover:shadow-md"
@@ -23,7 +25,7 @@ const SupplementCard = ({ item, onOpen }: Props) => {
       </ul>
 
       <div className="mt-3 text-xs font-bold">
-        Evidence: <span className="font-medium">{item.evidence}</span>
+        Evidence: <span className="font-medium">{formattedEvidence}</span>
       </div>
     </div>
   );

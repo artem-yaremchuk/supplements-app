@@ -1,17 +1,20 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { supplements } from '../mocks/supplements';
+import { useGetSupplementsQuery } from '../redux/supplements/supplements.api';
 import SupplementDetails from '../components/SupplementDetails';
 
 const SupplementDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  // TODO: Replace mock logic with actual API call once my own server is ready
-  const item = supplements.find((s) => s.id === id);
+  const { supplement } = useGetSupplementsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      supplement: data?.find((s) => s.id === id),
+    }),
+  });
 
-  return item ? (
+  return supplement ? (
     <section className="p-6">
-      <SupplementDetails item={item} onClose={() => navigate('/supplements')} />
+      <SupplementDetails item={supplement} onClose={() => navigate('/supplements')} />
     </section>
   ) : (
     <section className="flex flex-col items-center justify-center gap-2 p-6">
