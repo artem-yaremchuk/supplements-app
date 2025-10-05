@@ -1,4 +1,4 @@
-export type EvidenceLevel = 'High' | 'Moderate' | 'Low' | 'Insuffiecient';
+export type EvidenceLevel = 'High' | 'Moderate' | 'Low' | 'Insufficient';
 
 export interface Supplement {
   id: string;

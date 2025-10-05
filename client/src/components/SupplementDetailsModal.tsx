@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { supplements } from '../mocks/supplements';
+import { useGetSupplementsQuery } from '../redux/supplements/supplements.api';
 import SupplementDetails from './SupplementDetails';
 import { AnimatePresence } from 'framer-motion';
 
@@ -7,13 +7,17 @@ const SupplementDetailsModal = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const item = supplements.find((s) => s.id === id);
+  const { supplement } = useGetSupplementsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      supplement: data?.find((s) => s.id === id),
+    }),
+  });
 
   const handleClose = () => navigate(-1);
 
   return (
     <AnimatePresence>
-      {item && <SupplementDetails item={item} onClose={handleClose} />}
+      {supplement && <SupplementDetails item={supplement} onClose={handleClose} />}
     </AnimatePresence>
   );
 };

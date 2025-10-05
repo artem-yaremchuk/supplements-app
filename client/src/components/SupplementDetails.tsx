@@ -7,6 +7,8 @@ interface Props {
 }
 
 const SupplementDetails = ({ item, onClose }: Props) => {
+  const formattedEvidence = item.evidence.charAt(0) + item.evidence.slice(1).toLowerCase();
+
   return (
     <motion.div
       className="bg-overlay-bg fixed inset-0 z-60 flex items-center justify-center"
@@ -41,7 +43,7 @@ const SupplementDetails = ({ item, onClose }: Props) => {
         </ul>
 
         <p className="mt-4 text-xs font-bold">
-          Evidence level: <span className="font-medium">{item.evidence}</span>
+          Evidence level: <span className="font-medium">{formattedEvidence}</span>
         </p>
       </motion.div>
     </motion.div>
