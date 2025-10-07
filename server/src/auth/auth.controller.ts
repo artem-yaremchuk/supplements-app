@@ -1,4 +1,4 @@
-import { Controller, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, UseGuards, Post, Body, Get, Req, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   ApiTags,
@@ -12,7 +12,6 @@ import {
   ApiNotFoundResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { Post, Body, Get, Req } from '@nestjs/common';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { AuthResponseDto } from './dto/auth.response.dto';
 import { AuthGuard } from './auth.guard';
