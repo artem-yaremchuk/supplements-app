@@ -1,6 +1,11 @@
-import { SetMetadata } from '@nestjs/common';
 import type { Role } from '@prisma/client';
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
+import {
+  SetMetadata,
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthenticatedRequest } from './interfaces/authenticated-request.interface';
 
