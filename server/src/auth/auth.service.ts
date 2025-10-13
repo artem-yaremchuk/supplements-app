@@ -31,7 +31,7 @@ export class AuthService {
 
     if (existingUser) {
       this.logger.warn(`Registration failed: ${maskedEmail} already in use`);
-      throw new ConflictException(`Registration failed: ${registerRequest.email} already in use`);
+      throw new ConflictException('Registration failed. Email already in use');
     }
 
     const hashedPassword = await bcrypt.hash(registerRequest.password, 10);
