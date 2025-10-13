@@ -26,7 +26,7 @@ export class SupplementService {
 
     if (!supplement) {
       this.logger.warn(`Supplement with ID '${supplementId}' not found`);
-      throw new NotFoundException(`Supplement with ID '${supplementId}' not found`);
+      throw new NotFoundException('Supplement not found');
     }
 
     return supplement;
