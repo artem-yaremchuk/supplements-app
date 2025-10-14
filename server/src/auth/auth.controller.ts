@@ -1,4 +1,14 @@
-import { Controller, UseGuards, Post, Body, Get, Req, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  UsePipes,
+  Post,
+  Body,
+  Get,
+  Req,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   ApiTags,
@@ -13,10 +23,13 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { RegisterRequestDto } from './dto/register.request.dto';
+import { LoginRequestDto } from './dto/login.request.dto';
 import { AuthResponseDto } from './dto/auth.response.dto';
 import { AuthGuard } from './auth.guard';
 import { AuthenticatedRequest } from './interfaces/authenticated-request.interface';
 import { UserResponseDto } from './dto/auth.response.dto';
+import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
+import { registerSchema, loginSchema } from './schemas/authSchema';
 
 @ApiTags('Authorization')
 @Controller('auth')
@@ -32,9 +45,10 @@ export class AuthController {
     description: 'Invalid request',
   })
   @ApiConflictResponse({
-    description: 'Registration failed: email already in use',
+    description: 'Registration failed. Email already in use',
   })
   @Post('register')
+  @UsePipes(new ZodValidationPipe(registerSchema))
   async register(@Body() registerRequest: RegisterRequestDto): Promise<AuthResponseDto> {
     return await this.authService.register(registerRequest);
   }
@@ -54,9 +68,8 @@ export class AuthController {
     description: 'User not found',
   })
   @Post('login')
-  async login(
-    @Body() loginRequest: Pick<RegisterRequestDto, 'email' | 'password'>,
-  ): Promise<AuthResponseDto> {
+  @UsePipes(new ZodValidationPipe(loginSchema))
+  async login(@Body() loginRequest: LoginRequestDto): Promise<AuthResponseDto> {
     return await this.authService.login(loginRequest);
   }
 

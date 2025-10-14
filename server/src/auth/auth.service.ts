@@ -6,7 +6,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterRequestDto } from './dto/register.request.dto';
+import type { RegisterRequest, LoginRequest } from './schemas/authSchema';
 import { AuthResponseDto } from './dto/auth.response.dto';
 import { UserResponseDto } from './dto/auth.response.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -21,7 +21,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
   ) {}
 
-  public async register(registerRequest: RegisterRequestDto): Promise<AuthResponseDto> {
+  async register(registerRequest: RegisterRequest): Promise<AuthResponseDto> {
     const maskedEmail = registerRequest.email.replace(/(^[^@]?)[^@]*(@.*$)/, '$1***$2');
     this.logger.log(`Registration attempt for email: ${maskedEmail}`);
 
@@ -69,9 +69,7 @@ export class AuthService {
     return { user: userData, access_token };
   }
 
-  public async login(
-    loginRequest: Pick<RegisterRequestDto, 'email' | 'password'>,
-  ): Promise<AuthResponseDto> {
+  async login(loginRequest: LoginRequest): Promise<AuthResponseDto> {
     const maskedEmail = loginRequest.email.replace(/(^[^@]?)[^@]*(@.*$)/, '$1***$2');
     this.logger.log(`Login attempt for email: ${maskedEmail}`);
 
