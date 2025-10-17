@@ -1,6 +1,6 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { SupplementResponseDto } from './dto/supplement-response.dto';
+import { SupplementResponse } from './dto/supplement-response';
 
 @Injectable()
 export class SupplementService {
@@ -8,7 +8,7 @@ export class SupplementService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(): Promise<SupplementResponseDto[]> {
+  async findAll(): Promise<SupplementResponse[]> {
     const supplements = await this.prisma.supplement.findMany();
 
     if (!supplements) {
@@ -19,7 +19,7 @@ export class SupplementService {
     return supplements;
   }
 
-  async findOne(supplementId: string): Promise<SupplementResponseDto> {
+  async findOne(supplementId: string): Promise<SupplementResponse> {
     const supplement = await this.prisma.supplement.findUnique({
       where: { id: supplementId },
     });

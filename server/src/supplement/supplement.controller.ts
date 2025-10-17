@@ -6,7 +6,7 @@ import {
   ApiNotFoundResponse,
   ApiParam,
 } from '@nestjs/swagger';
-import { SupplementResponseDto } from './dto/supplement-response.dto';
+import { SupplementResponse } from './dto/supplement-response';
 import { SupplementService } from './supplement.service';
 
 @ApiTags('Supplement')
@@ -16,13 +16,13 @@ export class SupplementController {
 
   @ApiOperation({ summary: 'Get all supplements' })
   @ApiOkResponse({
-    type: SupplementResponseDto,
+    type: SupplementResponse,
     isArray: true,
     description: 'Successfully retrieved all supplements',
   })
   @ApiNotFoundResponse({ description: 'No supplements found in the database' })
   @Get()
-  async findAll(): Promise<SupplementResponseDto[]> {
+  async findAll(): Promise<SupplementResponse[]> {
     return await this.supplementService.findAll();
   }
 
@@ -33,12 +33,12 @@ export class SupplementController {
     example: '1e004131-75f7-4bd2-804a-6edf95b866c19',
   })
   @ApiOkResponse({
-    type: SupplementResponseDto,
+    type: SupplementResponse,
     description: 'Successfully retrieved supplement details',
   })
   @ApiNotFoundResponse({ description: 'Supplement not found' })
   @Get(':id')
-  async findOne(@Param('id', ParseUUIDPipe) supplementId: string): Promise<SupplementResponseDto> {
+  async findOne(@Param('id', ParseUUIDPipe) supplementId: string): Promise<SupplementResponse> {
     return await this.supplementService.findOne(supplementId);
   }
 }

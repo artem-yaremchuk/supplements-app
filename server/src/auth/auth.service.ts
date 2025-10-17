@@ -6,9 +6,9 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterRequestDto } from './dto/register.request.dto';
-import { AuthResponseDto } from './dto/auth.response.dto';
-import { UserResponseDto } from './dto/auth.response.dto';
+import { RegisterRequestDto } from './dto/register-request.dto';
+import { AuthResponse } from './dto/auth-response';
+import { UserResponse } from './dto/auth-response';
 import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 
@@ -21,7 +21,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
   ) {}
 
-  public async register(registerRequest: RegisterRequestDto): Promise<AuthResponseDto> {
+  public async register(registerRequest: RegisterRequestDto): Promise<AuthResponse> {
     const maskedEmail = registerRequest.email.replace(/(^[^@]?)[^@]*(@.*$)/, '$1***$2');
     this.logger.log(`Registration attempt for email: ${maskedEmail}`);
 
@@ -71,7 +71,7 @@ export class AuthService {
 
   public async login(
     loginRequest: Pick<RegisterRequestDto, 'email' | 'password'>,
-  ): Promise<AuthResponseDto> {
+  ): Promise<AuthResponse> {
     const maskedEmail = loginRequest.email.replace(/(^[^@]?)[^@]*(@.*$)/, '$1***$2');
     this.logger.log(`Login attempt for email: ${maskedEmail}`);
 
@@ -87,7 +87,7 @@ export class AuthService {
     });
 
     if (!user) {
-      this.logger.warn(`Login failed: user not found for email: ${maskedEmail}`);
+      this.logger.warn(`Login failed. User not found for email '${maskedEmail}'`);
       throw new NotFoundException('User not found');
     }
 
@@ -117,7 +117,7 @@ export class AuthService {
     return { user: userData, access_token };
   }
 
-  async findUserById(userId: string): Promise<UserResponseDto> {
+  async findUserById(userId: string): Promise<UserResponse> {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
       select: {
