@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserResponseDto {
+export class UserResponse {
   @ApiProperty({ example: 'uuid-1234' })
   id: string;
 
@@ -11,9 +11,9 @@ export class UserResponseDto {
   email: string;
 }
 
-export class AuthResponseDto {
-  @ApiProperty({ type: UserResponseDto })
-  user: UserResponseDto;
+export class AuthResponse {
+  @ApiProperty({ type: UserResponse })
+  user: UserResponse;
 
   @ApiProperty({ example: 'jwt-token-here' })
   access_token: string;

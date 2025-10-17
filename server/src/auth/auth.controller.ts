@@ -12,11 +12,11 @@ import {
   ApiNotFoundResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { RegisterRequestDto } from './dto/register.request.dto';
-import { AuthResponseDto } from './dto/auth.response.dto';
+import { RegisterRequestDto } from './dto/register-request.dto';
+import { AuthResponse } from './dto/auth-response';
 import { AuthGuard } from './auth.guard';
 import { AuthenticatedRequest } from './interfaces/authenticated-request.interface';
-import { UserResponseDto } from './dto/auth.response.dto';
+import { UserResponse } from './dto/auth-response';
 
 @ApiTags('Authorization')
 @Controller('auth')
@@ -26,7 +26,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Sign up' })
   @ApiCreatedResponse({
     description: 'New user successfully created',
-    type: AuthResponseDto,
+    type: AuthResponse,
   })
   @ApiBadRequestResponse({
     description: 'Invalid request',
@@ -35,14 +35,14 @@ export class AuthController {
     description: 'Registration failed: email already in use',
   })
   @Post('register')
-  async register(@Body() registerRequest: RegisterRequestDto): Promise<AuthResponseDto> {
+  async register(@Body() registerRequest: RegisterRequestDto): Promise<AuthResponse> {
     return await this.authService.register(registerRequest);
   }
 
   @ApiOperation({ summary: 'Login' })
   @ApiOkResponse({
     description: 'New user successfully logged in',
-    type: AuthResponseDto,
+    type: AuthResponse,
   })
   @ApiBadRequestResponse({
     description: 'Invalid request',
@@ -56,14 +56,14 @@ export class AuthController {
   @Post('login')
   async login(
     @Body() loginRequest: Pick<RegisterRequestDto, 'email' | 'password'>,
-  ): Promise<AuthResponseDto> {
+  ): Promise<AuthResponse> {
     return await this.authService.login(loginRequest);
   }
 
   @ApiOperation({ summary: 'Get current user' })
   @ApiOkResponse({
     description: 'Returns the current authenticated user',
-    type: AuthResponseDto,
+    type: AuthResponse,
   })
   @ApiUnauthorizedResponse({
     description: 'Invalid credentials',
@@ -71,7 +71,7 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('profile')
-  async getProfile(@Req() req: AuthenticatedRequest): Promise<UserResponseDto> {
+  async getProfile(@Req() req: AuthenticatedRequest): Promise<UserResponse> {
     const userId = req.user.sub;
 
     return await this.authService.findUserById(userId);
