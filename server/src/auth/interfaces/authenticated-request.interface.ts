@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import type { Role } from '@prisma/client';
+import type { Role } from '../../generated/prisma/enums';
 
 export interface AuthenticatedRequest extends Request {
   user: JwtPayload;

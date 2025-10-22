@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { Evidence } from '@prisma/client';
+import type { Evidence } from '../../generated/prisma/enums';
 
 export class SupplementResponse {
   @ApiProperty({ example: '1e004131-75f7-4bd2-804a-6edf95b866c1' })
