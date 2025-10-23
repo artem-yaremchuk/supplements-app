@@ -40,7 +40,6 @@ COPY package*.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 
 COPY --from=builder --chown=${USER}:${GROUP} /server/dist/ ./dist/
-COPY --from=builder --chown=${USER}:${GROUP} /server/src/generated/prisma ./dist/generated/prisma
 
 USER ${USER}
 EXPOSE ${PORT}
