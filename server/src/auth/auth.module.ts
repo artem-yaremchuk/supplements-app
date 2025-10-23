@@ -5,6 +5,7 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './auth.guard';
 import { RolesGuard } from './roles.guard';
+import type { StringValue } from 'ms';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { RolesGuard } from './roles.guard';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
+      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN as StringValue },
     }),
   ],
   controllers: [AuthController],
