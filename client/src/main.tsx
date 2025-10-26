@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')!).render(
         <PersistGate loading={<Loader />} persistor={persistor}>
           <BrowserRouter>
             <App />
-            <SpeedInsights />
+              {import.meta.env.VITE_VERCEL_ENV === 'production' && <SpeedInsights />}
           </BrowserRouter>
         </PersistGate>
       </ThemeProvider>
