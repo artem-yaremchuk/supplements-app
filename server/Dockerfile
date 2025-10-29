@@ -13,6 +13,7 @@ COPY . .
 RUN chmod +x node_modules/.bin/* || true
 
 RUN npx prisma generate --schema=./prisma
+
 RUN npm run build
 
 # Stage 3: runtime
@@ -41,6 +42,7 @@ RUN npm ci --omit=dev && npm cache clean --force
 
 COPY --from=builder --chown=${USER}:${GROUP} /server/dist/ ./dist/
 COPY --from=builder --chown=${USER}:${GROUP} /server/src/generated/prisma ./dist/generated/prisma
+COPY --from=builder --chown=${USER}:${GROUP} /server/prisma ./prisma
 
 USER ${USER}
 EXPOSE ${PORT}
