@@ -5,6 +5,7 @@ import {
   ApiOkResponse,
   ApiNotFoundResponse,
   ApiParam,
+  ApiBadRequestResponse,
 } from '@nestjs/swagger';
 import { SupplementResponse } from './dto/supplement-response';
 import { SupplementService } from './supplement.service';
@@ -34,8 +35,9 @@ export class SupplementController {
   })
   @ApiOkResponse({
     type: SupplementResponse,
-    description: 'Successfully retrieved supplement details',
+    description: 'Supplement details successfully retrieved ',
   })
+  @ApiBadRequestResponse({ description: 'Invalid supplement ID' })
   @ApiNotFoundResponse({ description: 'Supplement not found' })
   @Get(':id')
   async findOne(@Param('id', ParseUUIDPipe) supplementId: string): Promise<SupplementResponse> {
