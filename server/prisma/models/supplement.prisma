@@ -5,6 +5,7 @@ model Supplement {
   fullDesc   String
   mechanisms String[]
   evidence   Evidence
+  favoredBy  User[]
 }
 
 enum Evidence {
