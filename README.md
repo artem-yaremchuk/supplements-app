@@ -11,7 +11,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 ## ⚡️ Tech Stack
 
 ### Frontend
-- **TypeScript, React, Redux Toolkit, React Router**
+- **TypeScript, React, Redux Toolkit (RTK Query), React Router**
 - **React Hook Form + Zod** (forms and validation)
 - **Tailwind CSS** with custom feature-first tokens (light/dark themes)
 - **Framer Motion** (animations)
@@ -42,6 +42,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - Supplements search page
 - Mobile burger menu
 - User dropdown with profile info
+- Favorites functionality: integrated with RTK Query to toggle supplements in favorites. The heart icon and favorites list are available only for authorized users
 
 ### Backend
 - JWT-based authentication:
@@ -50,8 +51,20 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - `GET /auth/profile`  
   - `POST /auth/logout`  
 - Password hashing with bcrypt
+- Supplement module:
+  - `GET /supplements` – get all supplements  
+  - `GET /supplements/:id` – get supplement details  
+  - `PATCH /users/favorites/:id` – toggle supplement in favorites (for **authorized users only**)
 - Prisma schema + migrations synced with PostgreSQL (Neon)
 - API documentation available via Swagger
+
+---
+
+## 🐳 Docker Setup
+- **Dockerfile** for frontend  
+- **Dockerfile** for backend  
+- **docker-compose.postgres.yml** for local PostgreSQL environment  
+- **docker-compose.yml** for full application stack deployment (frontend + backend + database)
 
 ---
 
