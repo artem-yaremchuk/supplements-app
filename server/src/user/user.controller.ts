@@ -1,5 +1,8 @@
 import { Controller, UseGuards, Patch, Param, Req, ParseUUIDPipe } from '@nestjs/common';
 import {
+  ApiTags,
+  ApiHeader,
+  ApiBearerAuth,
   ApiOperation,
   ApiParam,
   ApiOkResponse,
@@ -11,6 +14,9 @@ import { AuthGuard } from '../auth/auth.guard';
 import { UserService } from './user.service';
 import { AuthenticatedRequest } from '../auth/interfaces/authenticated-request.interface';
 
+@ApiTags('User')
+@ApiBearerAuth()
+@ApiHeader({ name: 'Authorization', description: 'Bearer token' })
 @Controller('users')
 @UseGuards(AuthGuard)
 export class UserController {

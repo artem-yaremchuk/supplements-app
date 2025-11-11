@@ -11,6 +11,7 @@ import {
   ApiConflictResponse,
   ApiNotFoundResponse,
   ApiBearerAuth,
+  ApiHeader,
 } from '@nestjs/swagger';
 import { RegisterRequestDto } from './dto/register-request.dto';
 import { AuthResponse } from './dto/auth-response';
@@ -69,6 +70,7 @@ export class AuthController {
     description: 'Invalid credentials',
   })
   @ApiBearerAuth()
+  @ApiHeader({ name: 'Authorization', description: 'Bearer token' })
   @UseGuards(AuthGuard)
   @Get('profile')
   async getProfile(@Req() req: AuthenticatedRequest): Promise<UserResponse> {
@@ -85,6 +87,7 @@ export class AuthController {
     description: 'Invalid credentials',
   })
   @ApiBearerAuth()
+  @ApiHeader({ name: 'Authorization', description: 'Bearer token' })
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Post('logout')
