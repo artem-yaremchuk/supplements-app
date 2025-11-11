@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../hooks/hooks';
 import { selectUser } from '../redux/auth/selectors';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { CircleUserRound, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../redux/auth/operations';
-import type { AppDispatch } from '../redux/store';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const user = useSelector(selectUser);
+  const user = useAppSelector(selectUser);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
@@ -33,7 +32,7 @@ const UserMenu = () => {
     setIsOpen(false);
   };
 
-  const handleSaved = () => {
+  const handleFavorites = () => {
     setIsOpen(false);
   };
 
@@ -65,8 +64,8 @@ const UserMenu = () => {
             <ul>
               <li className="mt-7 flex flex-col gap-1">
                 <p className="text-sm font-semibold">My Content</p>
-                <Link to="/saved" className="text-sm hover:underline" onClick={handleSaved}>
-                  Saved Pages
+                <Link to="/favorites" className="text-sm hover:underline" onClick={handleFavorites}>
+                  Favorites Page
                 </Link>
                 <hr className="border-ui-border mt-2" />
               </li>

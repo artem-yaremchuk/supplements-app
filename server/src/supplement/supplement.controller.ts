@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe, UseGuards, Req } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -9,8 +9,11 @@ import {
 } from '@nestjs/swagger';
 import { SupplementResponse } from './dto/supplement-response';
 import { SupplementService } from './supplement.service';
+import { OptionalAuthGuard } from '../auth/optional-auth.guard';
+import { OptionalAuthRequest } from '../auth/interfaces/authenticated-request.interface';
 
 @ApiTags('Supplement')
+@UseGuards(OptionalAuthGuard)
 @Controller('supplements')
 export class SupplementController {
   constructor(private readonly supplementService: SupplementService) {}
@@ -23,8 +26,10 @@ export class SupplementController {
   })
   @ApiNotFoundResponse({ description: 'No supplements found in the database' })
   @Get()
-  async findAll(): Promise<SupplementResponse[]> {
-    return await this.supplementService.findAll();
+  async findAll(@Req() req: OptionalAuthRequest): Promise<SupplementResponse[]> {
+    const userId = req.user?.sub;
+
+    return await this.supplementService.findAll(userId);
   }
 
   @ApiOperation({ summary: 'Get supplement details' })
@@ -40,7 +45,12 @@ export class SupplementController {
   @ApiBadRequestResponse({ description: 'Invalid supplement ID' })
   @ApiNotFoundResponse({ description: 'Supplement not found' })
   @Get(':id')
-  async findOne(@Param('id', ParseUUIDPipe) supplementId: string): Promise<SupplementResponse> {
-    return await this.supplementService.findOne(supplementId);
+  async findOne(
+    @Req() req: OptionalAuthRequest,
+    @Param('id', ParseUUIDPipe) supplementId: string,
+  ): Promise<SupplementResponse> {
+    const userId = req.user?.sub;
+
+    return await this.supplementService.findOne(supplementId, userId);
   }
 }

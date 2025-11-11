@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetSupplementsQuery } from '../redux/supplements/supplements.api';
+import { useGetSupplementsQuery } from '../redux/supplement/supplementApi';
 import SupplementDetails from '../components/SupplementDetails';
 
 const SupplementDetailsPage = () => {

@@ -1,4 +1,4 @@
-import type { Supplement } from '../types/supplements';
+import type { Supplement } from '../types/supplement';
 import { motion } from 'framer-motion';
 
 interface Props {

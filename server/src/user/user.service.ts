@@ -1,6 +1,5 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { SupplementResponse } from '../supplement/dto/supplement-response';
 
 @Injectable()
 export class UserService {
@@ -56,20 +55,5 @@ export class UserService {
       `Supplement '${supplementId}' successfully added to user '${userId}' favorites`,
     );
     return { message: 'Supplement successfully added to favorites' };
-  }
-
-  async getFavorites(userId: string): Promise<SupplementResponse[]> {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      include: { favorites: true },
-    });
-
-    if (!user || user.favorites.length === 0) {
-      this.logger.warn(`No favorite supplements found for user '${userId}'`);
-      throw new NotFoundException('No favorite supplements found');
-    }
-
-    this.logger.log(`Favorite supplements successfully retrieved for user '${userId}'`);
-    return user.favorites;
   }
 }

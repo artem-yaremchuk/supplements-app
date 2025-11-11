@@ -8,7 +8,7 @@ export class SupplementService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(): Promise<SupplementResponse[]> {
+  async findAll(userId?: string): Promise<SupplementResponse[]> {
     const supplements = await this.prisma.supplement.findMany();
 
     if (!supplements) {
@@ -16,10 +16,24 @@ export class SupplementService {
       throw new NotFoundException('No supplements found');
     }
 
-    return supplements;
+    if (!userId) {
+      return supplements.map((s) => ({ ...s, isFavorite: false }));
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: { favorites: { select: { id: true } } },
+    });
+
+    const favoriteIds: string[] = user?.favorites.map((f) => f.id) ?? [];
+
+    return supplements.map((s) => ({
+      ...s,
+      isFavorite: favoriteIds.includes(s.id),
+    }));
   }
 
-  async findOne(supplementId: string): Promise<SupplementResponse> {
+  async findOne(supplementId: string, userId?: string): Promise<SupplementResponse> {
     const supplement = await this.prisma.supplement.findUnique({
       where: { id: supplementId },
     });
@@ -29,6 +43,17 @@ export class SupplementService {
       throw new NotFoundException('Supplement not found');
     }
 
-    return supplement;
+    if (!userId) {
+      return { ...supplement, isFavorite: false };
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: { favorites: { select: { id: true } } },
+    });
+
+    const favoriteIds: string[] = user?.favorites.map((f) => f.id) ?? [];
+
+    return { ...supplement, isFavorite: favoriteIds.includes(supplementId) };
   }
 }

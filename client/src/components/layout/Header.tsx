@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
@@ -8,7 +8,7 @@ import UserMenu from '../UserMenu';
 import BurgerMenuModal from '../BurgerMenuModal';
 
 const Header = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

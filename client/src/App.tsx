@@ -1,6 +1,5 @@
 import { lazy, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch } from './redux/store';
+import { useAppDispatch, useAppSelector } from './hooks/hooks';
 import { selectIsRefreshing, selectToken } from './redux/auth/selectors';
 import { refreshUser } from './redux/auth/operations';
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
@@ -16,12 +15,12 @@ const SupplementDetailsPage = lazy(() => import('./pages/SupplementDetailsPage')
 const SupplementDetailsModal = lazy(() => import('./components/SupplementDetailsModal'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
-const SavedPage = lazy(() => import('./pages/SavedPage'));
+const FavoritesPage = lazy(() => import('./pages/FavoritesPage'));
 
 const App = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const isRefreshing = useSelector(selectIsRefreshing);
-  const token = useSelector(selectToken);
+  const dispatch = useAppDispatch();
+  const isRefreshing = useAppSelector(selectIsRefreshing);
+  const token = useAppSelector(selectToken);
 
   useEffect(() => {
     if (token) dispatch(refreshUser());
@@ -51,7 +50,10 @@ const App = () => {
             path="login"
             element={<RestrictedRoute component={<LoginPage />} redirectTo="/" />}
           />
-          <Route path="saved" element={<PrivateRoute component={<SavedPage />} redirectTo="/" />} />
+          <Route
+            path="favorites"
+            element={<PrivateRoute component={<FavoritesPage />} redirectTo="/" />}
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
@@ -59,6 +61,7 @@ const App = () => {
       {backgroundLocation && (
         <Routes>
           <Route path="/supplements/:id" element={<SupplementDetailsModal />} />
+          <Route path="/favorites/:id" element={<SupplementDetailsModal />} />
         </Routes>
       )}
     </div>

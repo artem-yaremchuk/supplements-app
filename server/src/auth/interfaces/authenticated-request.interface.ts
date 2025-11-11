@@ -9,3 +9,7 @@ export interface JwtPayload {
   sub: string;
   role: Role;
 }
+
+export interface OptionalAuthRequest extends Request {
+  user: JwtPayload | null;
+}

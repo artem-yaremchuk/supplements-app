@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Patch, Get, Param, Req, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, UseGuards, Patch, Param, Req, ParseUUIDPipe } from '@nestjs/common';
 import {
   ApiOperation,
   ApiParam,
@@ -10,7 +10,6 @@ import {
 import { AuthGuard } from '../auth/auth.guard';
 import { UserService } from './user.service';
 import { AuthenticatedRequest } from '../auth/interfaces/authenticated-request.interface';
-import { SupplementResponse } from '../supplement/dto/supplement-response';
 
 @Controller('users')
 @UseGuards(AuthGuard)
@@ -49,22 +48,5 @@ export class UserController {
     const userId = req.user.sub;
 
     return await this.userService.toogleFavorite(userId, supplementId);
-  }
-
-  @ApiOperation({ summary: 'Get all favorite supplements for the current user' })
-  @ApiOkResponse({
-    type: SupplementResponse,
-    isArray: true,
-    description: 'Favorite supplements successfully retrieved',
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Invalid credentials',
-  })
-  @ApiNotFoundResponse({ description: 'Favorite supplements not found' })
-  @Get('favorites')
-  async getFavorites(@Req() req: AuthenticatedRequest): Promise<SupplementResponse[]> {
-    const userId = req.user.sub;
-
-    return await this.userService.getFavorites(userId);
   }
 }

@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 
 interface RestrictedRouteProps {
@@ -9,7 +9,7 @@ interface RestrictedRouteProps {
 }
 
 const RestrictedRoute = ({ component, redirectTo = '/' }: RestrictedRouteProps) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   return isLoggedIn ? <Navigate to={redirectTo} /> : component;
 };

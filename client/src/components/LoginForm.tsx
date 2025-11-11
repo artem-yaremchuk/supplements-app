@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../redux/store.ts';
+import { useAppDispatch } from '../hooks/hooks';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,7 +10,7 @@ import { login } from '../redux/auth/operations.ts';
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const {
     register,
