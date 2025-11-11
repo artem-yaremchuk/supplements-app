@@ -22,4 +22,7 @@ export class SupplementResponse {
 
   @ApiProperty({ example: 'HIGH' })
   evidence: Evidence;
+
+  @ApiProperty({ example: false })
+  isFavorite: boolean;
 }

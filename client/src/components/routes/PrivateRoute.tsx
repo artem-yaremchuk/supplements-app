@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 import { selectIsLoggedIn, selectIsRefreshing, selectToken } from '../../redux/auth/selectors';
 import Loader from '../Loader';
 
@@ -10,9 +10,9 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ component, redirectTo = '/' }: PrivateRouteProps) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isRefreshing = useSelector(selectIsRefreshing);
-  const token = useSelector(selectToken);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isRefreshing = useAppSelector(selectIsRefreshing);
+  const token = useAppSelector(selectToken);
 
   if (isRefreshing || (token && !isLoggedIn)) return <Loader />;
 

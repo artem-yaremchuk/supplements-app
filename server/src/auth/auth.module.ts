@@ -7,6 +7,7 @@ import { AuthGuard } from './auth.guard';
 import { RolesGuard } from './roles.guard';
 import type { StringValue } from 'ms';
 import { ConfigService } from '@nestjs/config';
+import { OptionalAuthGuard } from './optional-auth.guard';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthGuard, RolesGuard],
-  exports: [AuthGuard, RolesGuard],
+  providers: [AuthService, AuthGuard, RolesGuard, OptionalAuthGuard],
+  exports: [AuthGuard, RolesGuard, OptionalAuthGuard],
 })
 export class AuthModule {}

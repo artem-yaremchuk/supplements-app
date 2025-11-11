@@ -1,5 +1,5 @@
 import SupplementCard from './SupplementCard';
-import type { Supplement } from '../types/supplements';
+import type { Supplement } from '../types/supplement';
 
 interface Props {
   items: Supplement[];

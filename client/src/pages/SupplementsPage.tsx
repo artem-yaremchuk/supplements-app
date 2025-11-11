@@ -1,14 +1,32 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import type { Supplement } from '@/types/supplements';
+import type { Supplement } from '../types/supplement';
 import Loader from '../components/Loader';
 import SupplementList from '../components/SupplementList';
-import { useGetSupplementsQuery } from '../redux/supplements/supplements.api';
+import { useGetSupplementsQuery } from '../redux/supplement/supplementApi';
+import { useAppSelector } from '../hooks/hooks';
+import { selectToken, selectIsLoggedIn } from '../redux/auth/selectors';
 
 const EMPTY_ITEMS: Supplement[] = [];
 
 const SupplementsPage = () => {
-  const { data: items = EMPTY_ITEMS, isLoading, error } = useGetSupplementsQuery();
+  const token = useAppSelector(selectToken);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+
+  const skipQuery = token === undefined;
+
+  const {
+    data: items = EMPTY_ITEMS,
+    isLoading,
+    error,
+    refetch,
+  } = useGetSupplementsQuery(undefined, {
+    skip: skipQuery,
+  });
+
+  useEffect(() => {
+    if (isLoggedIn) refetch();
+  }, [isLoggedIn, refetch]);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
