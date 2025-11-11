@@ -1,6 +1,8 @@
 import { Controller, Get, Param, ParseUUIDPipe, UseGuards, Req } from '@nestjs/common';
 import {
   ApiTags,
+  ApiBearerAuth,
+  ApiHeader,
   ApiOperation,
   ApiOkResponse,
   ApiNotFoundResponse,
@@ -13,6 +15,8 @@ import { OptionalAuthGuard } from '../auth/optional-auth.guard';
 import { OptionalAuthRequest } from '../auth/interfaces/authenticated-request.interface';
 
 @ApiTags('Supplement')
+@ApiBearerAuth()
+@ApiHeader({ name: 'Authorization', description: 'Bearer token' })
 @UseGuards(OptionalAuthGuard)
 @Controller('supplements')
 export class SupplementController {
