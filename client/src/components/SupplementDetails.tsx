@@ -1,5 +1,8 @@
+import { Eye } from 'lucide-react';
 import type { Supplement } from '../types/supplement';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { socket } from '@/ws/socket';
 
 interface Props {
   item: Supplement;
@@ -7,6 +10,22 @@ interface Props {
 }
 
 const SupplementDetails = ({ item, onClose }: Props) => {
+  const [liveViewers, setLiveViewers] = useState(0);
+
+  useEffect(() => {
+    socket.emit('viewSupplement', { id: item.id });
+
+    socket.on('viewersUpdate', (payload) => {
+      if (payload.supplementId === item.id) {
+        setLiveViewers(payload.liveViewers);
+      }
+    });
+
+    return () => {
+      socket.emit('leaveSupplement', { id: item.id });
+    };
+  }, [item.id]);
+
   const formattedEvidence = item.evidence.charAt(0) + item.evidence.slice(1).toLowerCase();
 
   return (
@@ -42,9 +61,16 @@ const SupplementDetails = ({ item, onClose }: Props) => {
           ))}
         </ul>
 
-        <p className="mt-4 text-xs font-bold">
-          Evidence level: <span className="font-medium">{formattedEvidence}</span>
-        </p>
+        <div className="mt-4 flex items-center justify-between text-xs">
+          <div className="font-bold">
+            Evidence: <span className="font-medium">{formattedEvidence}</span>
+          </div>
+
+          <div className="flex items-center gap-1 transition-opacity hover:opacity-80">
+            <Eye size={22} strokeWidth={1} />
+            <p className="text-secondary-text">{liveViewers}</p>
+          </div>
+        </div>
       </motion.div>
     </motion.div>
   );

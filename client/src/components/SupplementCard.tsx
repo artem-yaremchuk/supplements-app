@@ -2,14 +2,15 @@ import type { Supplement } from '../types/supplement';
 import { useAppSelector } from '../hooks/hooks';
 import { useToggleFavoriteMutation } from '../redux/user/userApi';
 import { selectIsLoggedIn } from '../redux/auth/selectors';
-import { Heart } from 'lucide-react';
+import { Heart, Eye } from 'lucide-react';
 
 interface Props {
   item: Supplement;
   onOpen: (id: string) => void;
+  liveViewers: number;
 }
 
-const SupplementCard = ({ item, onOpen }: Props) => {
+const SupplementCard = ({ item, onOpen, liveViewers }: Props) => {
   const formattedEvidence = item.evidence.charAt(0) + item.evidence.slice(1).toLowerCase();
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
@@ -59,8 +60,15 @@ const SupplementCard = ({ item, onOpen }: Props) => {
         ))}
       </ul>
 
-      <div className="mt-3 text-xs font-bold">
-        Evidence: <span className="font-medium">{formattedEvidence}</span>
+      <div className="mt-4 flex items-center justify-between text-xs">
+        <div className="font-bold">
+          Evidence: <span className="font-medium">{formattedEvidence}</span>
+        </div>
+
+        <div className="flex items-center gap-1 transition-opacity hover:opacity-80">
+          <Eye size={22} strokeWidth={1} />
+          <p className="text-secondary-text">{liveViewers} people viewing now</p>
+        </div>
       </div>
     </div>
   );
