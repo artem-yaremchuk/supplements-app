@@ -23,6 +23,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - **TypeScript, Node.js, NestJS**
 - **PostgreSQL + Prisma** (ORM, migrations)
 - **REST API**
+- **WebSockets (Socket.io)**
 - **JWT authentication & authorization**
 - **bcrypt** (password hashing)
 - Documentation: **Swagger** ([/api](https://supplements-server.onrender.com/api))
@@ -43,6 +44,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - Mobile burger menu
 - User dropdown with profile info
 - Favorites functionality: integrated with RTK Query to toggle supplements in favorites. The heart icon and favorites list are available only for authorized users
+- Real-time view counters for supplements using a global Socket.io hook (`useLiveViewers`).
 
 ### Backend
 - JWT-based authentication:
@@ -57,6 +59,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - `PATCH /users/favorites/:id` – toggle supplement in favorites (for **authorized users only**)
 - Prisma schema + migrations synced with PostgreSQL (Neon)
 - API documentation available via Swagger
+- WebSocket gateway to broadcast active supplement viewers in realtime
 
 ---
 
