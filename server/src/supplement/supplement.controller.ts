@@ -31,7 +31,7 @@ export class SupplementController {
   @ApiNotFoundResponse({ description: 'No supplements found in the database' })
   @Get()
   async findAll(@Req() req: OptionalAuthRequest): Promise<SupplementResponse[]> {
-    const userId = req.user?.sub;
+    const userId = req.authUser?.sub;
 
     return await this.supplementService.findAll(userId);
   }
@@ -53,7 +53,7 @@ export class SupplementController {
     @Req() req: OptionalAuthRequest,
     @Param('id', ParseUUIDPipe) supplementId: string,
   ): Promise<SupplementResponse> {
-    const userId = req.user?.sub;
+    const userId = req.authUser?.sub;
 
     return await this.supplementService.findOne(supplementId, userId);
   }

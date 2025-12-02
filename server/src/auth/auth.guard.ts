@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate {
 
     try {
       const payload: JwtPayload = await this.jwtService.verifyAsync(token, {
-        secret: this.configService.get<string>('JWT_SECRET'),
+        secret: this.configService.getOrThrow<string>('JWT_SECRET'),
       });
 
       const user = await this.prisma.user.findUnique({
@@ -54,6 +54,7 @@ export class AuthGuard implements CanActivate {
       if (!user || user.token !== token) throw new UnauthorizedException();
 
       request['user'] = payload;
+      request['authUser'] = payload;
     } catch {
       throw new UnauthorizedException();
     }

@@ -4,6 +4,7 @@ import {
   UnauthorizedException,
   NotFoundException,
   ConflictException,
+  BadRequestException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterRequestDto } from './dto/register-request.dto';
@@ -21,7 +22,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
   ) {}
 
-  public async register(registerRequest: RegisterRequestDto): Promise<AuthResponse> {
+  async register(registerRequest: RegisterRequestDto): Promise<AuthResponse> {
     const maskedEmail = registerRequest.email.replace(/(^[^@]?)[^@]*(@.*$)/, '$1***$2');
     this.logger.log(`Registration attempt for email: ${maskedEmail}`);
 
@@ -69,9 +70,7 @@ export class AuthService {
     return { user: userData, access_token };
   }
 
-  public async login(
-    loginRequest: Pick<RegisterRequestDto, 'email' | 'password'>,
-  ): Promise<AuthResponse> {
+  async login(loginRequest: Pick<RegisterRequestDto, 'email' | 'password'>): Promise<AuthResponse> {
     const maskedEmail = loginRequest.email.replace(/(^[^@]?)[^@]*(@.*$)/, '$1***$2');
     this.logger.log(`Login attempt for email: ${maskedEmail}`);
 
@@ -93,10 +92,17 @@ export class AuthService {
 
     const { role, password, ...userData } = user;
 
+    if (!password) {
+      this.logger.warn(
+        `Login failed. User '${maskedEmail}' is registered via Google OAuth and has no password`,
+      );
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
     const compare = await bcrypt.compare(loginRequest.password, password);
 
     if (!compare) {
-      this.logger.warn(`Login failed: invalid credentials for email: ${maskedEmail}`);
+      this.logger.warn(`Login failed. Invalid credentials for email: ${maskedEmail}.`);
       throw new UnauthorizedException('Invalid credentials');
     }
 
@@ -142,5 +148,123 @@ export class AuthService {
     });
 
     this.logger.log(`User '${userId}' successfully logged out`);
+  }
+
+  async validateGoogleUser(googleProfile: {
+    googleId: string;
+    email: string;
+    name: string;
+  }): Promise<{ googleAuthCode: string }> {
+    const { googleId, email, name } = googleProfile;
+
+    const maskedEmail = email.replace(/(^[^@]?)[^@]*(@.*$)/, '$1***$2');
+    this.logger.log(`Google login attempt for email: ${maskedEmail}`);
+
+    let user = await this.prisma.user.findUnique({
+      where: { googleId },
+    });
+
+    if (user) {
+      const { googleAuthCode, googleAuthExp } = this.generateGoogleAuthCode();
+
+      await this.prisma.user.update({
+        where: { googleId },
+        data: { googleAuthCode, googleAuthExp, lastLogin: new Date() },
+      });
+
+      return { googleAuthCode };
+    }
+
+    user = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (user) {
+      const { googleAuthCode, googleAuthExp } = this.generateGoogleAuthCode();
+
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: { googleId, googleAuthCode, googleAuthExp, lastLogin: new Date() },
+      });
+
+      return { googleAuthCode };
+    }
+
+    const newUser = await this.prisma.user.create({
+      data: {
+        email,
+        googleId,
+        name,
+      },
+    });
+
+    const { googleAuthCode, googleAuthExp } = this.generateGoogleAuthCode();
+
+    await this.prisma.user.update({
+      where: { id: newUser.id },
+      data: { googleAuthCode, googleAuthExp },
+    });
+
+    return { googleAuthCode };
+  }
+
+  private generateGoogleAuthCode() {
+    const googleAuthCode = crypto.randomUUID();
+    const googleAuthExp = new Date(Date.now() + 60 * 1000);
+
+    return { googleAuthCode, googleAuthExp };
+  }
+
+  async verifyGoogleAuthCode(code: string): Promise<AuthResponse> {
+    const user = await this.prisma.user.findFirst({
+      where: { googleAuthCode: code },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        googleAuthExp: true,
+      },
+    });
+
+    if (!user) {
+      this.logger.warn('Invalid Google auth code');
+      throw new BadRequestException('Invalid Google auth code');
+    }
+
+    const { role, googleAuthExp, ...userData } = user;
+
+    if (!googleAuthExp || googleAuthExp < new Date()) {
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: {
+          googleAuthCode: null,
+          googleAuthExp: null,
+        },
+      });
+
+      this.logger.warn(`Google auth code expired for user '${user.id}'`);
+      throw new UnauthorizedException('Google auth code expired');
+    }
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        googleAuthCode: null,
+        googleAuthExp: null,
+      },
+    });
+
+    const payload = { sub: user.id, role };
+    const access_token = await this.jwtService.signAsync(payload);
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { token: access_token, lastLogin: new Date() },
+    });
+
+    this.logger.log(`User '${user.id}' successfully logged in with Google`);
+
+    return { user: userData, access_token };
   }
 }

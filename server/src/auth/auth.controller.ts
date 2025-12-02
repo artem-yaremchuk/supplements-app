@@ -1,4 +1,14 @@
-import { Controller, UseGuards, Post, Body, Get, Req, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Body,
+  Get,
+  Req,
+  HttpCode,
+  HttpStatus,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   ApiTags,
@@ -16,13 +26,22 @@ import {
 import { RegisterRequestDto } from './dto/register-request.dto';
 import { AuthResponse } from './dto/auth-response';
 import { AuthGuard } from './auth.guard';
-import { AuthenticatedRequest } from './interfaces/authenticated-request.interface';
+import {
+  AuthenticatedRequest,
+  GoogleCallbackRequest,
+} from './interfaces/authenticated-request.interface';
 import { UserResponse } from './dto/auth-response';
+import { GoogleAuthGuard } from './google-auth.guard';
+import { ConfigService } from '@nestjs/config';
+import { Response } from 'express';
 
 @ApiTags('Authorization')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @ApiOperation({ summary: 'Sign up' })
   @ApiCreatedResponse({
@@ -42,7 +61,7 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Login' })
   @ApiOkResponse({
-    description: 'New user successfully logged in',
+    description: 'User successfully logged in',
     type: AuthResponse,
   })
   @ApiBadRequestResponse({
@@ -80,14 +99,14 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Logout' })
+  @ApiBearerAuth()
+  @ApiHeader({ name: 'Authorization', description: 'Bearer token' })
   @ApiNoContentResponse({
     description: 'User successfully logged out',
   })
   @ApiUnauthorizedResponse({
     description: 'Invalid credentials',
   })
-  @ApiBearerAuth()
-  @ApiHeader({ name: 'Authorization', description: 'Bearer token' })
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Post('logout')
@@ -95,5 +114,48 @@ export class AuthController {
     const userId = req.user.sub;
 
     await this.authService.logout(userId);
+  }
+
+  @ApiOperation({
+    summary: 'Redirect user to Google OAuth consent screen',
+    description:
+      'This endpoint uses Passport Google Strategy to redirect user to Google OAuth consent screen',
+  })
+  @ApiOkResponse({ description: 'User successfully redirected to Google OAuth consent screen' })
+  @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuth() {}
+
+  @ApiOperation({
+    summary: 'Google OAuth callback',
+    description:
+      'Google redirects back to this endpoint. Generates temporary single-use google auth code and redirects user back to the frontend.',
+  })
+  @ApiOkResponse({
+    description: 'Google auth code successfully generated and sent',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'This Google account cannot be used for login. Please try another account.',
+  })
+  @Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  googleCallback(@Req() req: GoogleCallbackRequest, @Res() res: Response) {
+    const { googleAuthCode } = req.user;
+
+    const frontendUrl = this.configService.getOrThrow<string>('FRONTEND_URL');
+
+    return res.redirect(`${frontendUrl}/google-success?code=${googleAuthCode}`);
+  }
+
+  @ApiOperation({ summary: 'Verify Google auth code' })
+  @ApiOkResponse({
+    description: 'User successfully logged in with Google',
+    type: AuthResponse,
+  })
+  @ApiBadRequestResponse({ description: 'Invalid Google auth code' })
+  @ApiUnauthorizedResponse({ description: 'Google auth code expired' })
+  @Post('google-verify')
+  async googleVerify(@Body('code') code: string): Promise<AuthResponse> {
+    return await this.authService.verifyGoogleAuthCode(code);
   }
 }

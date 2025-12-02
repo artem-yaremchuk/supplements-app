@@ -8,6 +8,7 @@ import { RolesGuard } from './roles.guard';
 import type { StringValue } from 'ms';
 import { ConfigService } from '@nestjs/config';
 import { OptionalAuthGuard } from './optional-auth.guard';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { OptionalAuthGuard } from './optional-auth.guard';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthGuard, RolesGuard, OptionalAuthGuard],
+  providers: [AuthService, AuthGuard, RolesGuard, OptionalAuthGuard, GoogleStrategy],
   exports: [AuthGuard, RolesGuard, OptionalAuthGuard],
 })
 export class AuthModule {}
