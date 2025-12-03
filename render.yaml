@@ -32,6 +32,6 @@ services:
       - key: GOOGLE_CLIENT_SECRET
         sync: false
       - key: GOOGLE_REDIRECT_URI
-        value: https://supplements-server.onrender.com/auth/google/callback
+        sync: false
       - key: FRONTEND_URL
-        value: https://mysupps.vercel.app
+        sync: false
