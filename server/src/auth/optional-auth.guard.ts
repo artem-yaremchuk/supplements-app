@@ -10,14 +10,14 @@ export class OptionalAuthGuard extends AuthGuard {
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
-      request.user = null;
+      request.authUser = null;
       return true;
     }
 
     try {
       await super.canActivate(context);
     } catch {
-      request.user = null;
+      request.authUser = null;
     }
 
     return true;

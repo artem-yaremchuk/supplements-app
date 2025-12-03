@@ -3,11 +3,14 @@ model User {
   name      String
   email     String       @unique
   role      Role         @default(USER)
-  password  String
+  password  String?
   token     String?
   lastLogin DateTime     @default(now())
   createdAt DateTime     @default(now())
   favorites Supplement[]
+  googleId  String?      @unique
+  googleAuthCode String?
+  googleAuthExp  DateTime?
 }
 
 enum Role {

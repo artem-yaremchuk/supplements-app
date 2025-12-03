@@ -27,3 +27,11 @@ services:
         value: production
       - key: NODE_VERSION
         value: 22 
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        value: https://supplements-server.onrender.com/auth/google/callback
+      - key: FRONTEND_URL
+        value: https://mysupps.vercel.app

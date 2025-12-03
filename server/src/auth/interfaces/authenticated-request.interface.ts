@@ -11,5 +11,11 @@ export interface JwtPayload {
 }
 
 export interface OptionalAuthRequest extends Request {
-  user: JwtPayload | null;
+  authUser: JwtPayload | null;
+}
+
+export interface GoogleCallbackRequest extends Request {
+  user: {
+    googleAuthCode: string;
+  };
 }
