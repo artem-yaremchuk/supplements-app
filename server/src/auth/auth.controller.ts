@@ -22,6 +22,7 @@ import {
   ApiNotFoundResponse,
   ApiBearerAuth,
   ApiHeader,
+  ApiBody,
 } from '@nestjs/swagger';
 import { RegisterRequestDto } from './dto/register-request.dto';
 import { AuthResponse } from './dto/auth-response';
@@ -34,6 +35,7 @@ import { UserResponse } from './dto/auth-response';
 import { GoogleAuthGuard } from './google-auth.guard';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
+import { GoogleVerifyDto } from './dto/google-verify.dto';
 
 @ApiTags('Authorization')
 @Controller('auth')
@@ -148,6 +150,10 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Verify Google auth code' })
+  @ApiBody({
+    type: GoogleVerifyDto,
+    description: 'Google auth code for user verification',
+  })
   @ApiOkResponse({
     description: 'User successfully logged in with Google',
     type: AuthResponse,
