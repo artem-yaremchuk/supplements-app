@@ -25,6 +25,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - **REST API**
 - **WebSockets (Socket.io)**
 - **JWT authentication & authorization**
+- **Google OAuth 2.0 + Passport**
 - **bcrypt** (password hashing)
 - Documentation: **Swagger** ([/api](https://supplements-server.onrender.com/api))
 - Testing: **Postman**
@@ -52,6 +53,10 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - `POST /auth/login`  
   - `GET /auth/profile`  
   - `POST /auth/logout`  
+- Google OAuth 2.0 authentication (Passport Strategy):
+  - `GET /auth/google` - redirect user to Google OAuth consent screen
+  - `GET /auth/google/callback` - google OAuth callback
+  - `POST /auth/google-verify` – verify Google auth code
 - Password hashing with bcrypt
 - Supplement module:
   - `GET /supplements` – get all supplements  
