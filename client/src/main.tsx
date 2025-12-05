@@ -8,7 +8,7 @@ import Loader from './components/Loader.tsx';
 import { BrowserRouter } from 'react-router';
 import App from './App.tsx';
 import './index.css';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+import { SpeedInsightsWrapper } from './components/SpeedInsightsWrapper.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')!).render(
         <PersistGate loading={<Loader />} persistor={persistor}>
           <BrowserRouter>
             <App />
-            {import.meta.env.VITE_VERCEL_ENV === 'production' && <SpeedInsights />}
+            <SpeedInsightsWrapper />
           </BrowserRouter>
         </PersistGate>
       </ThemeProvider>

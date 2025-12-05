@@ -13,7 +13,7 @@ const GoogleAuthButton: FC<GoogleAuthButtonProps> = ({ label }) => {
   return (
     <button
       onClick={handleGoogleRedirect}
-      className="bg-ui-bg border-ui-border flex w-full items-center justify-center gap-[10px] rounded border px-3 py-[10px] min-h-10 shadow-sm transition-transform hover:scale-[1.01] active:scale-[0.99]"
+      className="bg-ui-bg border-ui-border flex min-h-10 w-full items-center justify-center gap-[10px] rounded border px-3 py-[10px] shadow-sm transition-transform hover:scale-[1.01] active:scale-[0.99]"
     >
       <GoogleIcon />
 

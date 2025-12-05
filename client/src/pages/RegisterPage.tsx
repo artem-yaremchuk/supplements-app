@@ -5,7 +5,7 @@ import Divider from '@/components/Divider';
 
 const RegisterPage = () => {
   return (
-    <div className="bg-soft-bg flex justify-center px-6 pt-20 pb-58 sm:pt-34 sm:pb-56">
+    <div className="bg-soft-bg flex justify-center px-6 pt-18 pb-58 sm:pt-28 sm:pb-56">
       <section className="bg-ui-bg w-full max-w-md rounded-lg p-6 shadow-md">
         <h2 className="mb-6 text-center text-2xl font-semibold">Create your account</h2>
 
