@@ -1,7 +1,7 @@
 import type { User, AuthResponse } from '../../types/auth';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { registerUser, login, refreshUser, logout } from './operations';
+import { registerUser, login, googleVerify, refreshUser, logout } from './operations';
 import { AUTH_ERROR_MESSAGES } from '../../constants/errors';
 
 interface AuthState {
@@ -47,6 +47,19 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state: AuthState, action: PayloadAction<string | undefined>) => {
         state.error = action.payload || AUTH_ERROR_MESSAGES.LOGIN_FAILED;
       })
+      .addCase(googleVerify.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
+        state.user = action.payload.user;
+        state.token = action.payload.access_token;
+        state.isLoggedIn = true;
+        state.error = null;
+      })
+      .addCase(
+        googleVerify.rejected,
+        (state: AuthState, action: PayloadAction<string | undefined>) => {
+          state.error = action.payload || AUTH_ERROR_MESSAGES.LOGIN_FAILED;
+        },
+      )
+
       .addCase(refreshUser.pending, (state: AuthState) => {
         state.isRefreshing = true;
       })

@@ -1,8 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  /* Fonts */
+  --font-roboto: 'Roboto', Arial, sans-serif;
+
   /* Text roles */
   --color-main-text: oklch(21% 0.034 264.665); /* primary text gray-900 */
   --color-secondary-text: oklch(55% 0.02 264); /* for subtitles, helper text gray-600 */

@@ -8,6 +8,7 @@ import Layout from './components/layout/Layout';
 import Loader from './components/Loader';
 import PrivateRoute from './components/routes/PrivateRoute';
 import RestrictedRoute from './components/routes/RestrictedRoute';
+import GoogleSuccessPage from './pages/GoogleSuccessPage';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const SupplementsPage = lazy(() => import('./pages/SupplementsPage'));
@@ -54,6 +55,7 @@ const App = () => {
             path="favorites"
             element={<PrivateRoute component={<FavoritesPage />} redirectTo="/" />}
           />
+          <Route path="google-success" element={<GoogleSuccessPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

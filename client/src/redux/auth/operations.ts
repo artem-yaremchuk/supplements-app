@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk<AuthResponse, Credentials, { reject
     try {
       const response = await api.post('/auth/register', credentials);
 
-      setAuthHeader(response.data.token);
+      setAuthHeader(response.data.access_token);
 
       toast.success(`${credentials.name}, welcome to the Supplements App!`);
 
@@ -44,7 +44,7 @@ export const login = createAsyncThunk<
   try {
     const response = await api.post('/auth/login', credentials);
 
-    setAuthHeader(response.data.token);
+    setAuthHeader(response.data.access_token);
 
     toast.success('You are now logged in.');
 
@@ -60,6 +60,30 @@ export const login = createAsyncThunk<
     return thunkAPI.rejectWithValue(errorMessage);
   }
 });
+
+export const googleVerify = createAsyncThunk<AuthResponse, string, { rejectValue: string }>(
+  'auth/google-verify',
+  async (code, thunkAPI) => {
+    try {
+      const response = await api.post('/auth/google-verify', { code });
+
+      setAuthHeader(response.data.access_token);
+
+      toast.success(`${response.data.user.name} successfully logged in with Google!`);
+
+      return response.data;
+    } catch (e) {
+      const errorMessage =
+        axios.isAxiosError(e) && e.response?.data?.message
+          ? e.response.data.message
+          : AUTH_ERROR_MESSAGES.GOOGLE_LOGIN_FAILED;
+
+      toast.error(errorMessage);
+
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  },
+);
 
 export const refreshUser = createAsyncThunk<
   User,
