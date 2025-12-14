@@ -4,10 +4,11 @@ import { SupplementService } from './supplement.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { AuthModule } from '../auth/auth.module';
 import { SupplementGateway } from './supplement.gateway';
+import { SupplementResolver } from './supplement.resolver';
 
 @Module({
   imports: [PrismaModule, AuthModule],
   controllers: [SupplementController],
-  providers: [SupplementService, SupplementGateway],
+  providers: [SupplementService, SupplementGateway, SupplementResolver],
 })
 export class SupplementModule {}

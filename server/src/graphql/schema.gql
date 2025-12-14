@@ -1,0 +1,23 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Mutation {
+  toogleFavorite(supplementId: String!): ToggleFavoriteResponse!
+}
+
+type Query {
+  supplement(id: String!): SupplementGraph!
+  supplements: [SupplementGraph!]!
+}
+
+type SupplementGraph {
+  id: ID!
+  isFavorite: Boolean!
+  name: String!
+  shortDesc: String!
+}
+
+type ToggleFavoriteResponse {
+  message: String!
+}

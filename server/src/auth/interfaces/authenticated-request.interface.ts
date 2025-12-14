@@ -19,3 +19,7 @@ export interface GoogleCallbackRequest extends Request {
     googleAuthCode: string;
   };
 }
+
+export interface GqlOptionalAuthRequest extends Request {
+  gqlUser: JwtPayload | null;
+}
