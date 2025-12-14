@@ -17,8 +17,8 @@ import { OptionalAuthRequest } from '../auth/interfaces/authenticated-request.in
 @ApiTags('Supplement')
 @ApiBearerAuth()
 @ApiHeader({ name: 'Authorization', description: 'Bearer token' })
-@UseGuards(OptionalAuthGuard)
 @Controller('supplements')
+@UseGuards(OptionalAuthGuard)
 export class SupplementController {
   constructor(private readonly supplementService: SupplementService) {}
 

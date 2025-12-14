@@ -9,6 +9,7 @@ import type { StringValue } from 'ms';
 import { ConfigService } from '@nestjs/config';
 import { OptionalAuthGuard } from './optional-auth.guard';
 import { GoogleStrategy } from './strategies/google.strategy';
+import { GqlOptionalAuthGuard } from './gql-optional-auth.guard';
 
 @Module({
   imports: [
@@ -23,7 +24,14 @@ import { GoogleStrategy } from './strategies/google.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthGuard, RolesGuard, OptionalAuthGuard, GoogleStrategy],
-  exports: [AuthGuard, RolesGuard, OptionalAuthGuard],
+  providers: [
+    AuthService,
+    AuthGuard,
+    RolesGuard,
+    OptionalAuthGuard,
+    GoogleStrategy,
+    GqlOptionalAuthGuard,
+  ],
+  exports: [AuthGuard, RolesGuard, OptionalAuthGuard, GqlOptionalAuthGuard],
 })
 export class AuthModule {}

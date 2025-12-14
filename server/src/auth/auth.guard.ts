@@ -11,6 +11,7 @@ import { Reflector } from '@nestjs/core';
 import { AuthenticatedRequest, JwtPayload } from './interfaces/authenticated-request.interface';
 import { PrismaService } from '../prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
@@ -34,7 +35,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    const request: AuthenticatedRequest = context.switchToHttp().getRequest();
+    const request = this.getRequest(context);
+
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
@@ -55,10 +57,23 @@ export class AuthGuard implements CanActivate {
 
       request['user'] = payload;
       request['authUser'] = payload;
+      request['gqlUser'] = payload;
     } catch {
       throw new UnauthorizedException();
     }
     return true;
+  }
+
+  private getRequest(context: ExecutionContext): AuthenticatedRequest {
+    if (context.getType() === 'http') {
+      return context.switchToHttp().getRequest();
+    }
+
+    // (context.getType<GqlExecutionContext>() === 'graphql')
+    const ctx = GqlExecutionContext.create(context);
+    const { req } = ctx.getContext<{ req: AuthenticatedRequest }>();
+
+    return req;
   }
 
   protected extractTokenFromHeader(request: Request): string | undefined {
