@@ -23,6 +23,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - **TypeScript, Node.js, NestJS**
 - **PostgreSQL + Prisma** (ORM, migrations)
 - **REST API**
+- **GraphQL (NestJS GraphQL)** - implemented for Supplement and User entities (demo purposes)
 - **WebSockets (Socket.io)**
 - **JWT authentication & authorization**
 - **Google OAuth 2.0 + Passport**
@@ -53,7 +54,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - `POST /auth/login`  
   - `GET /auth/profile`  
   - `POST /auth/logout`  
-- Google OAuth 2.0 authentication (Passport Strategy):
+- Google OAuth 2.0 authentication (Passport Strategy). Testing mode - only pre-approved emails are allowed:
   - `GET /auth/google` - redirect user to Google OAuth consent screen
   - `GET /auth/google/callback` - google OAuth callback
   - `POST /auth/google-verify` – verify Google auth code
@@ -65,6 +66,10 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - Prisma schema + migrations synced with PostgreSQL (Neon)
 - API documentation available via Swagger
 - WebSocket gateway to broadcast active supplement viewers in realtime
+- GraphQL API (demo):
+  - Supplement type + resolvers
+  - User type + resolvers
+  - Queries & mutations for demo usage
 
 ---
 
