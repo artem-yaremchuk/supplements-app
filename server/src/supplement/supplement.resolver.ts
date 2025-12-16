@@ -11,7 +11,7 @@ export class SupplementResolver {
   constructor(private readonly supplementService: SupplementService) {}
 
   @Query(() => [SupplementGraph])
-  async supplements(@GqlUser() user: JwtPayload | null) {
+  async supplements(@GqlUser() user: JwtPayload | null): Promise<SupplementGraph[]> {
     const userId = user?.sub;
     return this.supplementService.findAll(userId);
   }
@@ -20,7 +20,7 @@ export class SupplementResolver {
   async supplement(
     @Args('id', ParseUUIDPipe) supplementId: string,
     @GqlUser() user: JwtPayload | null,
-  ) {
+  ): Promise<SupplementGraph> {
     const userId = user?.sub;
     return this.supplementService.findOne(supplementId, userId);
   }
