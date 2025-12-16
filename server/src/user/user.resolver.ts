@@ -4,9 +4,9 @@ import { AuthGuard } from '../auth/auth.guard';
 import { UserService } from './user.service';
 import { GqlUser } from '../auth/gql-optional-auth.guard';
 import { JwtPayload } from '../auth/interfaces/authenticated-request.interface';
-import { ToggleFavoriteResponse } from './models/toggle-favorite-response.model';
+import { ToggleFavoriteResponse } from './dto/toggle-favorite-response';
 
-@Resolver(() => String)
+@Resolver()
 @UseGuards(AuthGuard)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
@@ -17,7 +17,6 @@ export class UserResolver {
     @GqlUser() user: JwtPayload,
   ): Promise<ToggleFavoriteResponse> {
     const userId = user?.sub;
-    console.log(userId);
     return await this.userService.toogleFavorite(userId, supplementId);
   }
 }
