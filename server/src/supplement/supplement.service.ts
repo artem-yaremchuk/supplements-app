@@ -1,20 +1,54 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { SupplementResponse } from './dto/supplement-response';
+import { REDIS, EXPIRE_TIME, REDIS_SUPPLEMENTS_ALL } from '../constants/redis-constants';
+import { RedisClientType } from 'redis';
 
 @Injectable()
 export class SupplementService {
   private readonly logger = new Logger(SupplementService.name);
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(REDIS) private readonly redis: RedisClientType,
+    private readonly prisma: PrismaService,
+  ) {}
 
   async findAll(userId?: string): Promise<SupplementResponse[]> {
+    const cachedData = await this.redis.get(REDIS_SUPPLEMENTS_ALL);
+
+    if (cachedData) {
+      this.logger.log('Returning supplements from Redis cache');
+      const supplements = JSON.parse(cachedData) as SupplementResponse[];
+
+      if (!userId) {
+        return supplements.map((s) => ({ ...s, isFavorite: false }));
+      }
+
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        include: { favorites: { select: { id: true } } },
+      });
+
+      const favoriteIds: string[] = user?.favorites.map((f) => f.id) ?? [];
+
+      return supplements.map((s) => ({
+        ...s,
+        isFavorite: favoriteIds.includes(s.id),
+      }));
+    }
+
     const supplements = await this.prisma.supplement.findMany();
 
     if (!supplements) {
       this.logger.warn('No supplements found');
       throw new NotFoundException('No supplements found');
     }
+
+    await this.redis.set(REDIS_SUPPLEMENTS_ALL, JSON.stringify(supplements), {
+      EX: EXPIRE_TIME,
+    });
+
+    this.logger.log(`All supplements cached in Redis for ${EXPIRE_TIME} seconds`);
 
     if (!userId) {
       return supplements.map((s) => ({ ...s, isFavorite: false }));

@@ -1,11 +1,16 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { RedisClientType } from 'redis';
+import { REDIS, REDIS_SUPPLEMENTS_ALL } from '../constants/redis-constants';
 
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(REDIS) private readonly redis: RedisClientType,
+    private readonly prisma: PrismaService,
+  ) {}
 
   async toogleFavorite(userId: string, supplementId: string): Promise<{ message: string }> {
     const supplement = await this.prisma.supplement.findUnique({
@@ -36,6 +41,9 @@ export class UserService {
         },
       });
 
+      await this.redis.del(REDIS_SUPPLEMENTS_ALL);
+      this.logger.log(`Key '${REDIS_SUPPLEMENTS_ALL}' successfully deleted from Redis cache`);
+
       this.logger.log(
         `Supplement '${supplementId}' successfully removed from user '${userId}' favorites`,
       );
@@ -50,6 +58,9 @@ export class UserService {
         },
       },
     });
+
+    await this.redis.del(REDIS_SUPPLEMENTS_ALL);
+    this.logger.log(`Key '${REDIS_SUPPLEMENTS_ALL}' successfully deleted from Redis cache`);
 
     this.logger.log(
       `Supplement '${supplementId}' successfully added to user '${userId}' favorites`,

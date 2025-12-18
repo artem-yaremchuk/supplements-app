@@ -8,6 +8,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { GqlOptionalAuthRequest } from './auth/interfaces/authenticated-request.interface';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { GqlOptionalAuthRequest } from './auth/interfaces/authenticated-request.
     AuthModule,
     SupplementModule,
     UserModule,
+    RedisModule,
   ],
   controllers: [],
   providers: [],
