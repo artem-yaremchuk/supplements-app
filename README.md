@@ -22,6 +22,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 ### Backend
 - **TypeScript, Node.js, NestJS**
 - **PostgreSQL + Prisma** (ORM, migrations)
+- **Redis(Upstash)**
 - **REST API**
 - **GraphQL (NestJS GraphQL)** - implemented for Supplement and User entities (demo purposes)
 - **WebSockets (Socket.io)**
@@ -70,6 +71,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - Supplement type + resolvers
   - User type + resolvers
   - Queries & mutations for demo usage
+- Redis (Upstash) as an in-memory cache layer for the supplements list
 
 ---
 
