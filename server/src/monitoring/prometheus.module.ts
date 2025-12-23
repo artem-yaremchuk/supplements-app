@@ -7,7 +7,8 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   controllers: [PrometheusController],
   providers: [PrometheusService],
-  exports: [PrometheusService, AuthModule],
+  exports: [PrometheusService],
+  imports: [AuthModule],
 })
 export class PrometheusModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
