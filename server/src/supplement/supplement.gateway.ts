@@ -41,7 +41,7 @@ export class SupplementGateway {
     });
 
     this.logger.log(
-      `User ${client.id} started viewing '${supplementId}'. Active viewers: ${liveViewers}`,
+      `User '${client.id}' started viewing '${supplementId}'. Active viewers: ${liveViewers}`,
     );
   }
 
@@ -63,7 +63,7 @@ export class SupplementGateway {
     });
 
     this.logger.log(
-      `User ${client.id} stopped viewing '${supplementId}'. Active viewers: ${liveViewers}`,
+      `User '${client.id}' stopped viewing '${supplementId}'. Active viewers: ${liveViewers}`,
     );
   }
 
@@ -81,7 +81,7 @@ export class SupplementGateway {
       });
 
       this.logger.log(
-        `User ${client.id} disconnected from '${supplementId}'. Active viewers: ${activeViewers}`,
+        `User '${client.id}' disconnected from '${supplementId}'. Active viewers: ${activeViewers}`,
       );
     }
   }
