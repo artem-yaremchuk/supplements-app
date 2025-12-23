@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { SupplementResponse } from './dto/supplement-response';
 import { REDIS, EXPIRE_TIME, REDIS_SUPPLEMENTS_ALL } from '../constants/redis-constants';
 import { RedisClientType } from 'redis';
+import { PrometheusService } from '../monitoring/prometheus.service';
 
 @Injectable()
 export class SupplementService {
@@ -11,12 +12,15 @@ export class SupplementService {
   constructor(
     @Inject(REDIS) private readonly redis: RedisClientType,
     private readonly prisma: PrismaService,
+    private readonly prometheus: PrometheusService,
   ) {}
 
   async findAll(userId?: string): Promise<SupplementResponse[]> {
     const cachedData = await this.redis.get(REDIS_SUPPLEMENTS_ALL);
 
     if (cachedData) {
+      this.prometheus.cacheHit.inc();
+
       this.logger.log('Returning supplements from Redis cache');
       const supplements = JSON.parse(cachedData) as SupplementResponse[];
 
@@ -36,6 +40,8 @@ export class SupplementService {
         isFavorite: favoriteIds.includes(s.id),
       }));
     }
+
+    this.prometheus.cacheMiss.inc();
 
     const supplements = await this.prisma.supplement.findMany();
 

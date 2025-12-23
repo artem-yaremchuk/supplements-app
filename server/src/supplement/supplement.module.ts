@@ -6,9 +6,10 @@ import { AuthModule } from '../auth/auth.module';
 import { SupplementGateway } from './supplement.gateway';
 import { SupplementResolver } from './supplement.resolver';
 import { RedisModule } from '../redis/redis.module';
+import { PrometheusModule } from '../monitoring/prometheus.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, RedisModule],
+  imports: [PrismaModule, AuthModule, RedisModule, PrometheusModule],
   controllers: [SupplementController],
   providers: [SupplementService, SupplementGateway, SupplementResolver],
 })
