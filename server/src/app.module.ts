@@ -9,6 +9,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { GqlOptionalAuthRequest } from './auth/interfaces/authenticated-request.interface';
 import { RedisModule } from './redis/redis.module';
+import { PrometheusModule } from './monitoring/prometheus.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RedisModule } from './redis/redis.module';
     SupplementModule,
     UserModule,
     RedisModule,
+    PrometheusModule,
   ],
   controllers: [],
   providers: [],
