@@ -37,3 +37,5 @@ services:
         sync: false
       - key: REDIS_URL
         sync: false
+      - key: GRAFANA_METRICS_TOKEN
+        sync: false
