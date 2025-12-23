@@ -1,7 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { PrometheusService } from './prometheus.service';
 import { ApiExcludeEndpoint } from '@nestjs/swagger';
+import { MetricsAuthGuard } from 'src/auth/metrics-auth.guard';
 
+@UseGuards(MetricsAuthGuard)
 @Controller('metrics')
 export class PrometheusController {
   constructor(private readonly prometheusService: PrometheusService) {}

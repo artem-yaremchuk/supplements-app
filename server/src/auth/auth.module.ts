@@ -10,6 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { OptionalAuthGuard } from './optional-auth.guard';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { GqlOptionalAuthGuard } from './gql-optional-auth.guard';
+import { MetricsAuthGuard } from './metrics-auth.guard';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { GqlOptionalAuthGuard } from './gql-optional-auth.guard';
     OptionalAuthGuard,
     GoogleStrategy,
     GqlOptionalAuthGuard,
+    MetricsAuthGuard,
   ],
-  exports: [AuthGuard, RolesGuard, OptionalAuthGuard, GqlOptionalAuthGuard],
+  exports: [AuthGuard, RolesGuard, OptionalAuthGuard, GqlOptionalAuthGuard, MetricsAuthGuard],
 })
 export class AuthModule {}
