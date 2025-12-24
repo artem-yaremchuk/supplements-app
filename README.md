@@ -30,6 +30,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - **Google OAuth 2.0 + Passport**
 - **bcrypt** (password hashing)
 - Documentation: **Swagger** ([/api](https://supplements-server.onrender.com/api))
+- Monitoring: **Prometheus + Grafana**
 - Testing: **Postman**
 - Hosting: **Render**
 
@@ -71,7 +72,8 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - Supplement type + resolvers
   - User type + resolvers
   - Queries & mutations for demo usage
-- Redis (Upstash) as an in-memory cache layer for the supplements list
+- Redis (Upstash) as an in-memory cache layer for the supplements lis
+- Application metrics monitoring via Prometheus + Grafana
 
 ---
 
