@@ -65,10 +65,12 @@ const SupplementCard = ({ item, onOpen, liveViewers }: Props) => {
           Evidence: <span className="font-medium">{formattedEvidence}</span>
         </div>
 
-        <div className="flex items-center gap-1 transition-opacity hover:opacity-80">
-          <Eye size={22} strokeWidth={1} />
-          <p className="text-secondary-text">{liveViewers} people viewing now</p>
-        </div>
+        {liveViewers > 0 && (
+          <div className="flex items-center gap-1 transition-opacity hover:opacity-80">
+            <Eye size={22} strokeWidth={1} />
+            <p className="text-secondary-text">{liveViewers} people viewing now</p>
+          </div>
+        )}
       </div>
     </div>
   );

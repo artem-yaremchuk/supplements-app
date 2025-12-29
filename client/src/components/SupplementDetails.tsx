@@ -26,6 +26,20 @@ const SupplementDetails = ({ item, onClose }: Props) => {
     };
   }, [item.id]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
   const formattedEvidence = item.evidence.charAt(0) + item.evidence.slice(1).toLowerCase();
 
   return (

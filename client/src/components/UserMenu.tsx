@@ -20,8 +20,21 @@ const UserMenu = () => {
   useEffect(() => {
     const closeMenu = () => setIsOpen(false);
 
-    if (isOpen) window.addEventListener('click', closeMenu);
-    return () => window.removeEventListener('click', closeMenu);
+    if (isOpen) document.addEventListener('click', closeMenu);
+    return () => document.removeEventListener('click', closeMenu);
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isOpen]);
 
   const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
