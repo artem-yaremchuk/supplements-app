@@ -22,7 +22,13 @@ import { OptionalAuthRequest } from '../auth/interfaces/authenticated-request.in
 export class SupplementController {
   constructor(private readonly supplementService: SupplementService) {}
 
-  @ApiOperation({ summary: 'Get all supplements' })
+  @ApiOperation({
+    summary: 'Get all supplements',
+    description:
+      'Authentication is optional. ' +
+      'If a valid Bearer token is provided, the response includes user-specific data (favorites). ' +
+      'Without a valid token, the endpoint returns public data only.',
+  })
   @ApiOkResponse({
     type: SupplementResponse,
     isArray: true,
@@ -36,7 +42,13 @@ export class SupplementController {
     return await this.supplementService.findAll(userId);
   }
 
-  @ApiOperation({ summary: 'Get supplement details' })
+  @ApiOperation({
+    summary: 'Get supplement details',
+    description:
+      'Authentication is optional. ' +
+      'If a valid Bearer token is provided, the response includes user-specific data (favorites). ' +
+      'Without a valid token, the endpoint returns public data only.',
+  })
   @ApiParam({
     name: 'id',
     description: 'UUID of the supplement',
