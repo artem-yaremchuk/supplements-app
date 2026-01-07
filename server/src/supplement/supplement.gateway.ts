@@ -1,12 +1,22 @@
-import { Logger } from '@nestjs/common';
 import {
   WebSocketGateway,
-  WebSocketServer,
   SubscribeMessage,
   MessageBody,
   ConnectedSocket,
+  WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import {
+  SUPPLEMENT_VIEWED_EVENT,
+  SUPPLEMENT_LEFT_EVENT,
+  SOCKET_DISCONNECTED_EVENT,
+  VIEWERS_UPDATED_EVENT,
+} from '../supplement/domain/types/supplement-events.types';
+import { SupplementViewedEvent } from '../supplement/domain/events/supplement-viewed.event';
+import { SupplementLeftEvent } from '../supplement/domain/events/supplement-left.event';
+import { SocketDisconnectedEvent } from '../supplement/domain/events/socket-disconnected.event';
+import { ViewersUpdatedEvent } from './domain/events/viewers-updated.event';
 
 @WebSocketGateway({
   cors: {
@@ -14,75 +24,30 @@ import { Server, Socket } from 'socket.io';
   },
 })
 export class SupplementGateway {
-  private viewers: Record<string, string[]> = {};
-
-  private readonly logger = new Logger(SupplementGateway.name);
-
   @WebSocketServer()
-  server: Server;
+  private server: Server;
+
+  constructor(private readonly eventEmitter: EventEmitter2) {}
 
   @SubscribeMessage('viewSupplement')
   handleView(@MessageBody() data: { id: string }, @ConnectedSocket() client: Socket) {
-    const supplementId = data.id;
-
-    if (!this.viewers[supplementId]) {
-      this.viewers[supplementId] = [];
-    }
-
-    if (!this.viewers[supplementId].includes(client.id)) {
-      this.viewers[supplementId].push(client.id);
-    }
-
-    const liveViewers = this.viewers[supplementId].length;
-
-    this.server.emit('viewersUpdate', {
-      supplementId,
-      liveViewers,
-    });
-
-    this.logger.log(
-      `User '${client.id}' started viewing '${supplementId}'. Active viewers: ${liveViewers}`,
-    );
+    this.eventEmitter.emit(SUPPLEMENT_VIEWED_EVENT, new SupplementViewedEvent(data.id, client.id));
   }
 
   @SubscribeMessage('leaveSupplement')
   handleLeave(@MessageBody() data: { id: string }, @ConnectedSocket() client: Socket) {
-    const supplementId = data.id;
-
-    if (this.viewers[supplementId]) {
-      this.viewers[supplementId] = this.viewers[supplementId].filter(
-        (socketId) => socketId !== client.id,
-      );
-    }
-
-    const liveViewers = this.viewers[supplementId]?.length ?? 0;
-
-    this.server.emit('viewersUpdate', {
-      supplementId,
-      liveViewers,
-    });
-
-    this.logger.log(
-      `User '${client.id}' stopped viewing '${supplementId}'. Active viewers: ${liveViewers}`,
-    );
+    this.eventEmitter.emit(SUPPLEMENT_LEFT_EVENT, new SupplementLeftEvent(data.id, client.id));
   }
 
   handleDisconnect(client: Socket) {
-    for (const supplementId of Object.keys(this.viewers)) {
-      this.viewers[supplementId] = this.viewers[supplementId].filter(
-        (socketId) => socketId !== client.id,
-      );
+    this.eventEmitter.emit(SOCKET_DISCONNECTED_EVENT, new SocketDisconnectedEvent(client.id));
+  }
 
-      const activeViewers = this.viewers[supplementId].length;
-
-      this.server.emit('viewersUpdate', {
-        supplementId,
-        activeViewers,
-      });
-
-      this.logger.log(
-        `User '${client.id}' disconnected from '${supplementId}'. Active viewers: ${activeViewers}`,
-      );
-    }
+  @OnEvent(VIEWERS_UPDATED_EVENT)
+  handleViewersUpdated(event: ViewersUpdatedEvent) {
+    this.server.emit('viewersUpdate', {
+      supplementId: event.supplementId,
+      liveViewers: event.liveViewers,
+    });
   }
 }
