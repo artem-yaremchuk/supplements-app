@@ -10,4 +10,4 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
   ],
   exports: [EventEmitterModule],
 })
-export class EventsModule {}
+export class EventBusModule {}
