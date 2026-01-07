@@ -10,6 +10,7 @@ import { join } from 'path';
 import { GqlOptionalAuthRequest } from './auth/interfaces/authenticated-request.interface';
 import { RedisModule } from './redis/redis.module';
 import { PrometheusModule } from './monitoring/prometheus.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PrometheusModule } from './monitoring/prometheus.module';
     UserModule,
     RedisModule,
     PrometheusModule,
+    EventsModule,
   ],
   controllers: [],
   providers: [],
