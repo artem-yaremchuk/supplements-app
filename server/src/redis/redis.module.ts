@@ -16,10 +16,10 @@ import { ConfigService } from '@nestjs/config';
 
         client.on('error', (err: unknown) => {
           if (err instanceof Error) {
-            logger.error(err.message, err.stack);
-          } else {
-            logger.error('Unknown Redis error');
+            logger.warn(`Redis error: ${err.message}`);
           }
+
+          logger.error('Unknown Redis error');
         });
 
         await client.connect();
