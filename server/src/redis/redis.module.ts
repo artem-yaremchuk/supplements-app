@@ -12,14 +12,24 @@ import { ConfigService } from '@nestjs/config';
 
         const client = createClient({
           url: configService.getOrThrow<string>('REDIS_URL'),
+          socket: {
+            keepAlive: true,
+            keepAliveInitialDelay: 5000,
+            reconnectStrategy: (retries) => {
+              if (retries > 20) {
+                return new Error('Redis reconnect retries exceeded');
+              }
+              return Math.min(retries * 100, 2000);
+            },
+          },
         });
 
         client.on('error', (err: unknown) => {
           if (err instanceof Error) {
             logger.warn(`Redis error: ${err.message}`);
+          } else {
+            logger.error('Unknown Redis error');
           }
-
-          logger.error('Unknown Redis error');
         });
 
         await client.connect();
