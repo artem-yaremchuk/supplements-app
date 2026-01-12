@@ -12,11 +12,11 @@ import {
   SUPPLEMENT_LEFT_EVENT,
   SOCKET_DISCONNECTED_EVENT,
   VIEWERS_UPDATED_EVENT,
-} from '../supplement/domain/types/supplement-events.types';
-import { SupplementViewedEvent } from '../supplement/domain/events/supplement-viewed.event';
-import { SupplementLeftEvent } from '../supplement/domain/events/supplement-left.event';
-import { SocketDisconnectedEvent } from '../supplement/domain/events/socket-disconnected.event';
-import { ViewersUpdatedEvent } from './domain/events/viewers-updated.event';
+} from '../supplement/types/supplement-events.types';
+import { SupplementViewedEvent } from './events/domain/supplement-viewed.event';
+import { SupplementLeftEvent } from './events/domain/supplement-left.event';
+import { SocketDisconnectedEvent } from './events/domain/socket-disconnected.event';
+import { ViewersUpdatedEvent } from './events/integration/viewers-updated.event';
 
 @WebSocketGateway({
   cors: {

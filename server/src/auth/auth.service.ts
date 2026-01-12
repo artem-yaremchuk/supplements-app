@@ -12,6 +12,7 @@ import { AuthResponse } from './dto/auth-response';
 import { UserResponse } from './dto/auth-response';
 import { PrismaService } from '../prisma/prisma.service';
 import bcrypt from 'bcrypt';
+import { OutboxEventType } from '../generated/prisma/enums';
 
 @Injectable()
 export class AuthService {
@@ -37,18 +38,34 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(registerRequest.password, 10);
 
-    const user = await this.prisma.user.create({
-      data: {
-        name: registerRequest.name,
-        email: registerRequest.email,
-        password: hashedPassword,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-      },
+    const user = await this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.create({
+        data: {
+          name: registerRequest.name,
+          email: registerRequest.email,
+          password: hashedPassword,
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+        },
+      });
+
+      await tx.outboxEvent.create({
+        data: {
+          type: OutboxEventType.USER_REGISTERED,
+          payload: {
+            userId: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+          },
+        },
+      });
+
+      return user;
     });
 
     const { role, ...userData } = user;
@@ -160,11 +177,15 @@ export class AuthService {
     const maskedEmail = email.replace(/(^[^@]?)[^@]*(@.*$)/, '$1***$2');
     this.logger.log(`Google login attempt for email: ${maskedEmail}`);
 
+    // Try to find user by googleId
+    // googleId is the primary identity for a Google account
     let user = await this.prisma.user.findUnique({
       where: { googleId },
     });
 
     if (user) {
+      // User already logged in with Google before
+      // Just refresh auth code and lastLogin
       const { googleAuthCode, googleAuthExp } = this.generateGoogleAuthCode();
 
       await this.prisma.user.update({
@@ -175,6 +196,10 @@ export class AuthService {
       return { googleAuthCode };
     }
 
+    // If googleId not found — try to find user by email
+    // Scenario:
+    // user registered earlier via email/password
+    // and now logs in with Google for the first time
     user = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -182,6 +207,7 @@ export class AuthService {
     if (user) {
       const { googleAuthCode, googleAuthExp } = this.generateGoogleAuthCode();
 
+      // Link Google account to existing user
       await this.prisma.user.update({
         where: { id: user.id },
         data: { googleId, googleAuthCode, googleAuthExp, lastLogin: new Date() },
@@ -190,12 +216,38 @@ export class AuthService {
       return { googleAuthCode };
     }
 
-    const newUser = await this.prisma.user.create({
-      data: {
-        email,
-        googleId,
-        name,
-      },
+    // If neither googleId nor email exists - this is a completely new user
+    // Inside transaction:
+    // create user
+    // write USER_REGISTERED event to outbox
+    const newUser = await this.prisma.$transaction(async (tx) => {
+      const newUser = await tx.user.create({
+        data: {
+          email,
+          googleId,
+          name,
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+        },
+      });
+
+      await tx.outboxEvent.create({
+        data: {
+          type: OutboxEventType.USER_REGISTERED,
+          payload: {
+            userId: newUser.id,
+            name: newUser.name,
+            email: newUser.email,
+            role: newUser.role,
+          },
+        },
+      });
+
+      return newUser;
     });
 
     const { googleAuthCode, googleAuthExp } = this.generateGoogleAuthCode();

@@ -11,6 +11,7 @@ import { GqlOptionalAuthRequest } from './auth/interfaces/authenticated-request.
 import { RedisModule } from './redis/redis.module';
 import { PrometheusModule } from './monitoring/prometheus.module';
 import { EventBusModule } from './event/event-bus.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { EventBusModule } from './event/event-bus.module';
       sortSchema: true,
       context: ({ req }: { req: GqlOptionalAuthRequest }) => ({ req }),
     }),
+    ScheduleModule.forRoot(),
     PrismaModule,
     AuthModule,
     SupplementModule,
