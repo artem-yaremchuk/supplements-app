@@ -29,6 +29,10 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - **JWT authentication & authorization**
 - **Google OAuth 2.0 + Passport**
 - **bcrypt** (password hashing)
+- **Transactional Outbox Pattern** (integration events)
+- **Background jobs (NestJS Schedule / Cron)**
+- **Email service: Resend**
+- **React Email** (email templates)
 - Documentation: **Swagger** ([/api](https://supplements-server.onrender.com/api))
 - Monitoring: **Prometheus + Grafana**
 - Testing: **Postman**
@@ -61,6 +65,8 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - `GET /auth/google/callback` - google OAuth callback
   - `POST /auth/google-verify` – verify Google auth code
 - Password hashing with bcrypt
+- Transactional Outbox pattern with background processor (`EVERY_30_SECONDS`) for reliable integration events handling.
+- USER_REGISTERED event handler with decoupled EmailService (Resend) and React Email welcome template.
 - Supplement module:
   - `GET /supplements` – get all supplements  
   - `GET /supplements/:id` – get supplement details  
