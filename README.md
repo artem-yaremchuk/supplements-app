@@ -66,7 +66,7 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - `POST /auth/google-verify` – verify Google auth code
 - Password hashing with bcrypt
 - Transactional Outbox pattern with background processor (`EVERY_30_SECONDS`) for reliable integration events handling.
-- USER_REGISTERED event handler with decoupled EmailService (Resend) and React Email welcome template.
+- USER_REGISTERED event handler with decoupled EmailService (Resend) and React Email welcome template (dev mode, pre-approved recipient only).
 - Supplement module:
   - `GET /supplements` – get all supplements  
   - `GET /supplements/:id` – get supplement details  
