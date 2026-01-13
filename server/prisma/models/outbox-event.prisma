@@ -1,0 +1,17 @@
+model OutboxEvent {
+  id          String          @id @default(uuid())
+  type        OutboxEventType
+  payload     Json
+  status      OutboxStatus    @default(PENDING)
+  createdAt   DateTime        @default(now())
+  processedAt DateTime?
+}
+
+enum OutboxEventType {
+  USER_REGISTERED
+}
+
+enum OutboxStatus {
+  PENDING
+  PROCESSED
+}

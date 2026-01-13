@@ -1,6 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { createClient } from 'redis';
-import { REDIS } from '../constants/redis-constants';
+import { REDIS } from '../constants/redis.constants';
 import { ConfigService } from '@nestjs/config';
 
 @Module({

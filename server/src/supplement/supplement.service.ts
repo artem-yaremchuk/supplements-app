@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { SupplementResponse } from './dto/supplement-response';
-import { REDIS, EXPIRE_TIME, REDIS_SUPPLEMENTS_ALL } from '../constants/redis-constants';
+import { REDIS, EXPIRE_TIME, REDIS_SUPPLEMENTS_ALL } from '../constants/redis.constants';
 import { RedisClientType } from 'redis';
 import { PrometheusService } from '../monitoring/prometheus.service';
 

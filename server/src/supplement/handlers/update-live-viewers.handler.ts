@@ -5,11 +5,11 @@ import {
   SUPPLEMENT_LEFT_EVENT,
   SOCKET_DISCONNECTED_EVENT,
   VIEWERS_UPDATED_EVENT,
-} from '../types/supplement-events.types';
-import { SupplementViewedEvent } from '../events/supplement-viewed.event';
-import { SupplementLeftEvent } from '../events/supplement-left.event';
-import { SocketDisconnectedEvent } from '../events/socket-disconnected.event';
-import { ViewersUpdatedEvent } from '../events/viewers-updated.event';
+} from '../constants/supplement-events.constants';
+import { SupplementViewedEvent } from '../events/domain/supplement-viewed.event';
+import { SupplementLeftEvent } from '../events/domain/supplement-left.event';
+import { SocketDisconnectedEvent } from '../events/domain/socket-disconnected.event';
+import { ViewersUpdatedEvent } from '../events/integration/viewers-updated.event';
 
 @Injectable()
 export class UpdateLiveViewersHandler {
@@ -35,7 +35,6 @@ export class UpdateLiveViewersHandler {
       VIEWERS_UPDATED_EVENT,
       new ViewersUpdatedEvent(supplementId, liveViewers),
     );
-    console.log(this.viewers);
   }
 
   @OnEvent(SUPPLEMENT_LEFT_EVENT)

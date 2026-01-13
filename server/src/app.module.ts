@@ -11,6 +11,9 @@ import { GqlOptionalAuthRequest } from './auth/interfaces/authenticated-request.
 import { RedisModule } from './redis/redis.module';
 import { PrometheusModule } from './monitoring/prometheus.module';
 import { EventBusModule } from './event/event-bus.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { OutboxEventModule } from './outbox-event/outbox-event.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -26,6 +29,7 @@ import { EventBusModule } from './event/event-bus.module';
       sortSchema: true,
       context: ({ req }: { req: GqlOptionalAuthRequest }) => ({ req }),
     }),
+    ScheduleModule.forRoot(),
     PrismaModule,
     AuthModule,
     SupplementModule,
@@ -33,6 +37,8 @@ import { EventBusModule } from './event/event-bus.module';
     RedisModule,
     PrometheusModule,
     EventBusModule,
+    OutboxEventModule,
+    EmailModule,
   ],
   controllers: [],
   providers: [],

@@ -7,8 +7,8 @@ import { SupplementGateway } from './supplement.gateway';
 import { SupplementResolver } from './supplement.resolver';
 import { RedisModule } from '../redis/redis.module';
 import { PrometheusModule } from '../monitoring/prometheus.module';
-import { UpdateLiveViewersHandler } from './domain/handlers/update-live-viewers.handler';
-import { LogSupplementEventsHandler } from './domain/handlers/log-supplement-events.handler';
+import { UpdateLiveViewersHandler } from './handlers/update-live-viewers.handler';
+import { LogSupplementEventsHandler } from './handlers/log-supplement-events.handler';
 
 @Module({
   imports: [PrismaModule, AuthModule, RedisModule, PrometheusModule],
