@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { RedisClientType } from 'redis';
-import { REDIS, REDIS_SUPPLEMENTS_ALL } from '../constants/redis-constants';
+import { REDIS, REDIS_SUPPLEMENTS_ALL } from '../constants/redis.constants';
 
 @Injectable()
 export class UserService {

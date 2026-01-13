@@ -5,7 +5,7 @@ import {
   SUPPLEMENT_LEFT_EVENT,
   SOCKET_DISCONNECTED_EVENT,
   VIEWERS_UPDATED_EVENT,
-} from '../types/supplement-events.types';
+} from '../constants/supplement-events.constants';
 import { SupplementViewedEvent } from '../events/domain/supplement-viewed.event';
 import { SupplementLeftEvent } from '../events/domain/supplement-left.event';
 import { SocketDisconnectedEvent } from '../events/domain/socket-disconnected.event';

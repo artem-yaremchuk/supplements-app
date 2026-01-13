@@ -84,7 +84,7 @@ const UserMenu = () => {
               </li>
 
               <li className="mt-7 flex flex-col items-start gap-1">
-                <p className="text-sm font-semibold">My Profile</p>
+                <p className="text-sm font-semibold">User Info</p>
                 <button className="text-sm hover:underline" onClick={handleLogout}>
                   Logout
                 </button>

@@ -39,3 +39,7 @@ services:
         sync: false
       - key: GRAFANA_METRICS_TOKEN
         sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        sync: false

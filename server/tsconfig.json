@@ -16,6 +16,8 @@
     "baseUrl": "./",
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    
+    "jsx": "react-jsx"
   }
 }
