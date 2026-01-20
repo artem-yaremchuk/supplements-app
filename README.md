@@ -10,15 +10,6 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 
 ## ⚡️ Tech Stack
 
-### Frontend
-- **TypeScript, React, Redux Toolkit (RTK Query), React Router**
-- **React Hook Form + Zod** (forms and validation)
-- **Tailwind CSS** with custom feature-first tokens (light/dark themes)
-- **Framer Motion** (animations)
-- **Axios, Vite**
-- **Responsive design**
-- Hosting: **Vercel**
-
 ### Backend
 - **TypeScript, Node.js, NestJS**
 - **PostgreSQL + Prisma** (ORM, migrations)
@@ -38,21 +29,18 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
 - Testing: **Postman**
 - Hosting: **Render**
 
+### Frontend
+- **TypeScript, React, Redux Toolkit (RTK Query), React Router**
+- **React Hook Form + Zod** (forms and validation)
+- **Tailwind CSS** with custom feature-first tokens (light/dark themes)
+- **Framer Motion** (animations)
+- **Axios, Vite**
+- **Responsive design**
+- Hosting: **Vercel**
+
 ---
 
 ## 🔑 Implemented Features
-
-### Frontend
-- Routing with `RestrictedRoute`, `PrivateRoute`, and modal overlay routes
-- Context + Local Storage for theme persistence (light/dark mode)
-- Custom Tailwind CSS tokens for styling
-- Registration & login forms with validation (React Hook Form + Zod)
-- Animations powered by Framer Motion
-- Supplements search page
-- Mobile burger menu
-- User dropdown with profile info
-- Favorites functionality: integrated with RTK Query to toggle supplements in favorites. The heart icon and favorites list are available only for authorized users
-- Real-time view counters for supplements using a global Socket.io hook (`useLiveViewers`).
 
 ### Backend
 - JWT-based authentication:
@@ -80,6 +68,18 @@ Backend deployed on **Render**: [supplements-server.onrender.com](https://supple
   - Queries & mutations for demo usage
 - Redis (Upstash) as an in-memory cache layer for the supplements lis
 - Application metrics monitoring via Prometheus + Grafana
+
+### Frontend
+- Routing with `RestrictedRoute`, `PrivateRoute`, and modal overlay routes
+- Context + Local Storage for theme persistence (light/dark mode)
+- Custom Tailwind CSS tokens for styling
+- Registration & login forms with validation (React Hook Form + Zod)
+- Animations powered by Framer Motion
+- Supplements search page
+- Mobile burger menu
+- User dropdown with profile info
+- Favorites functionality: integrated with RTK Query to toggle supplements in favorites. The heart icon and favorites list are available only for authorized users
+- Real-time view counters for supplements using a global Socket.io hook (`useLiveViewers`).
 
 ---
 
