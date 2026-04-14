@@ -14,7 +14,7 @@ export class OutboxEventProcessor {
     private readonly userRegisteredHandler: UserRegisteredHandler,
   ) {}
 
-  @Cron(CronExpression.EVERY_30_SECONDS)
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async process() {
     const events = await this.prisma.outboxEvent.findMany({
       where: { status: OutboxStatus.PENDING },
